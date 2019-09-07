@@ -785,7 +785,7 @@
                         <li><a href="departments.html"><i class="fa fa-users"></i><span>库存管理</span></a></li>
 
                         <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>                        
-                        <li><a href="library.html"><i class="fa fa-book"></i><span>器材管理</span></a></li>
+                        <li><a href="/material/list"><i class="fa fa-book"></i><span>器材管理</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
                         <li class="g_heading">Extra</li>
                         <li><a href="events.html"><i class="fa fa-calendar"></i><span>Calender</span></a></li>
@@ -958,7 +958,7 @@
                                 </div>
                             </div>
                             <div class="dropdown d-flex">
-                                <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown"th:text="${session.loginUser.getUsername()}" th:if="${session.loginUser.getUsername()!=null}">
+                                <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown"th:text="${session.loginUser.getUsername()}" th:if="${session.loginUser!=null}">
                                     <span class="avatar" style="background-image: url(../assets/images/xs/avatar5.jpg)"></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                     <a class="dropdown-item" href="page-profile.html"><i class="dropdown-icon fe fe-user"></i> Profile</a>
@@ -1042,7 +1042,7 @@
                     <div class="col-6 col-md-4 col-xl-2">
                         <div class="card">
                             <div class="card-body">
-                                <a href="library.html" class="my_sort_cut text-muted">
+                                <a href="material.html" class="my_sort_cut text-muted">
                                     <i class="fa fa-book"></i>
                                     <span>器材管理</span>
                                 </a>

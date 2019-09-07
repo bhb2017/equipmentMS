@@ -1,4 +1,5 @@
 <!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -16,6 +17,7 @@
 
 <!-- Core css -->
 <link rel="stylesheet" href="../assets/css/style.min.css"/>
+    <script src="/jquery-1.8.0.min.js"></script>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -785,7 +787,7 @@
                         <li><a href="departments.html"><i class="fa fa-users"></i><span>库存管理</span></a></li>
 
                         <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>                        
-                        <li class="active"><a href="library.html"><i class="fa fa-book"></i><span>器材管理</span></a></li>
+                        <li class="active"><a href="/material/list"><i class="fa fa-book"></i><span>器材管理</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
                         <li class="g_heading">Extra</li>
                         <li><a href="events.html"><i class="fa fa-calendar"></i><span>Calender</span></a></li>
@@ -1013,142 +1015,17 @@
                                                 
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Management Basics</td>
-                                                <td>Designing</td>
-                                                <td>Architecture</td>
-                                                <td>Second Year</td>
-                                                <td>CD</td>
+                                        <tbody th:if="${materials !=null}">
+                                            <tr th:each="material :${materials}">
+                                                <td th:text="${material.id}"></td>
+                                                <td th:text="${material.name}"></td>
+                                                <td th:text="${material.specification}"></td>
+                                                <td th:text="${material.price}"></td>
+                                                <td th:text="${material.rate}"></td>
+                                                <td th:text="${material.remark}"></td>
                                                 
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Java Black Book</td>
-                                                <td>Graphics</td>
-                                                <td>MBA</td>
-                                                <td>Third Year</td>
-                                                <td>DVD</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Parallel Computing</td>
-                                                <td>Politics</td>
-                                                <td>Architecture</td>
-                                                <td>Third Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Networking</td>
-                                                <td>Computer</td>
-                                                <td>MBA</td>
-                                                <td>Last Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Web Programming</td>
-                                                <td>Mechanics</td>
-                                                <td>Computer</td>
-                                                <td>Third Year</td>
-                                                <td>Book</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Designing</td>
-                                                <td>Mechanics</td>
-                                                <td>Computer</td>
-                                                <td>Third Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Mechanics</td>
-                                                <td>Computer</td>
-                                                <td>Computer Engineering</td>
-                                                <td>Second Year</td>
-                                                <td>DVD</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>Computer Fundamental</td>
-                                                <td>Animation</td>
-                                                <td>Mechanical</td>
-                                                <td>Third Year</td>
-                                                <td>CD</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>Time History</td>
-                                                <td>Management</td>
-                                                <td>Mechanical</td>
-                                                <td>Third Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Politics</td>
-                                                <td>Designing</td>
-                                                <td>Mechanical</td>
-                                                <td>Second Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>11</td>
-                                                <td>Designing</td>
-                                                <td>Mechanics</td>
-                                                <td>Computer</td>
-                                                <td>Third Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>12</td>
-                                                <td>Mechanics</td>
-                                                <td>Computer</td>
-                                                <td>Computer Engineering</td>
-                                                <td>Second Year</td>
-                                                <td>DVD</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>13</td>
-                                                <td>Computer Fundamental</td>
-                                                <td>Animation</td>
-                                                <td>Mechanical</td>
-                                                <td>Third Year</td>
-                                                <td>CD</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>14</td>
-                                                <td>Time History</td>
-                                                <td>Management</td>
-                                                <td>Mechanical</td>
-                                                <td>Third Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>15</td>
-                                                <td>Politics</td>
-                                                <td>Designing</td>
-                                                <td>Mechanical</td>
-                                                <td>Second Year</td>
-                                                <td>Newspaper</td>
-                                                
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -1164,35 +1041,35 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                             <form class="card-body">
+                             <form class="card-body" method="post" action="/material/add">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材名称</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材规格</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="specification">
                                     </div>
                                 </div>
                                  <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材单价<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="price">
                                     </div>
                                 </div>
                                  <div class="form-group row">
                                     <label class="col-md-3 col-form-label">损耗率<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="rate">
                                     </div>
                                 </div>
                                  <div class="form-group row">
                                     <label class="col-md-3 col-form-label">备注<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="remark">
                                     </div>
                                 </div>
                                
@@ -1204,50 +1081,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <!-- <div class="card-header">
-                                <h3 class="card-title">添加器材</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Title" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Subject" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Department" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Type" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Year" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Status" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-primary btn-lg btn-simple">Add Library</button>
-                                    </div>
-                                </div>
-                            </div> -->
+
                         </div>
                     </div>
                     <div class="tab-pane" id="Library-add-Boot">
@@ -1259,133 +1093,69 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                             <form class="card-body">
+                             <form class="card-body" method="post" action="/material/update">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材名称<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <select class="form-control input-height" name="sub">
+                                        <select id="mId" class="form-control input-height" name="sub">
                                             <option value="">选择器材.</option>
-                                            <option value="Category 1">Mathematics</option>
-                                            <option value="Category 2">Science</option>
-                                            <option value="Category 3">Software</option>
-                                            <option value="Category 3">Other</option>
+                                            <option th:each="material : ${materials}" th:value="${material.id}" th:text="${material.name}"></option>
+
                                         </select>
                                     </div>
                                 </div>
+                                 <script>
+                                    $(document).ready(function () {
+                                        $("#mId").change(function () {
+                                            var mid= $("#mId").val();
+                                            var  url = "/material/detail";
+                                            var data={"mid":mid}
+                                            $.post(url,data,function (data) {
+                                                $("#newspecification").val(data.specification);
+                                                $("#newprice").val(data.price);
+                                                $("#newrate").val(data.rate);
+                                                $("#newremark").val(data.remark)
+                                                $("#newid").val(mid)
+                                            })
+                                        })
+                                    })
+                                 </script>
+
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材规格</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="newspecification" name="newspecification">
+                                        <input type="hidden" id="newid" name="newid">
                                     </div>
                                 </div>
                                  <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材单价<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" id="newprice" name="newprice" class="form-control">
                                     </div>
                                 </div>
                                  <div class="form-group row">
                                     <label class="col-md-3 col-form-label">损耗率<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="newrate" name="newrate">
                                     </div>
                                 </div>
                                  <div class="form-group row">
                                     <label class="col-md-3 col-form-label">备注<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="newremark" id="newremark">
                                     </div>
                                 </div>
                                
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">提交</button>
+                                        <button type="submit" name="renew" class="btn btn-primary">提交</button>
                                         <button type="submit" class="btn btn-outline-secondary">取消</button>
                                     </div>
                                 </div>
                             </form>
-                           <!--  <form class="card-body">
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Title <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Subject  <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <select class="form-control input-height" name="sub">
-                                            <option value="">Select...</option>
-                                            <option value="Category 1">Mathematics</option>
-                                            <option value="Category 2">Science</option>
-                                            <option value="Category 3">Software</option>
-                                            <option value="Category 3">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Purchase Date <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Auther Name <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Publisher <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Price <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Department <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <select class="form-control input-height" name="departmnt">
-                                            <option value="">Select...</option>
-                                            <option value="Category 1">Mathematics</option>
-                                            <option value="Category 2">Engineering</option>
-                                            <option value="Category 3">Science</option>
-                                            <option value="Category 3">M.B.A.</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Asset Type <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <select class="form-control input-height" name="assttype">
-                                            <option value="">Select...</option>
-                                            <option value="Category 1">Book</option>
-                                            <option value="Category 2">CD</option>
-                                            <option value="Category 3">DVD</option>
-                                            <option value="Category 3">NewsPaper</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Asset Details <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label"></label>
-                                    <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
-                                    </div>
-                                </div>
-                            </form> -->
+
                         </div>
                     </div>
                 </div>
@@ -1422,8 +1192,8 @@
 <script src="../assets/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!-- Start project main js  and page js -->
-<script src="../assets/js/core.js"></script>
-<script src="../../static/univer/js/page/dialogs.js"></script>
-<script src="../../static/univer/js/table/datatable.js"></script>
+<script src="/assets/js/core.js"></script>
+<script src="/univer/js/page/dialogs.js"></script>
+<script src="/univer/js/table/datatable.js"></script>
 </body>
 </html>
