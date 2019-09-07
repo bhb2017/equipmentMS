@@ -1,4 +1,5 @@
 <!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -30,7 +31,7 @@
     <div id="header_top" class="header_top">
         <div class="container">
             <div class="hleft">
-                <a class="header-brand" href="index.html"><i class="fa fa-graduation-cap brand-logo"></i></a>
+                <a class="header-brand" href="home"><i class="fa fa-graduation-cap brand-logo"></i></a>
                 <div class="dropdown">
                     <a href="javascript:void(0)" class="nav-link icon menu_toggle"><i class="fe fe-align-center"></i></a>
                     <a href="page-search.html" class="nav-link icon"><i class="fe fe-search" data-toggle="tooltip" data-placement="right" title="Search..."></i></a>
@@ -957,8 +958,8 @@
                                 </div>
                             </div>
                             <div class="dropdown d-flex">
-                                <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown">
-                                    <span class="avatar" style="background-image: url(../assets/images/xs/avatar5.jpg)"></span> George</a>
+                                <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown"th:text="${session.loginUser.getUsername()}" th:if="${session.loginUser.getUsername()!=null}">
+                                    <span class="avatar" style="background-image: url(../assets/images/xs/avatar5.jpg)"></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                     <a class="dropdown-item" href="page-profile.html"><i class="dropdown-icon fe fe-user"></i> Profile</a>
                                     <a class="dropdown-item" href="app-setting.html"><i class="dropdown-icon fe fe-settings"></i> Settings</a>
