@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3307/equipment"
+                        userId="root"
+                        password="qq123321">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.lib.equipment.manager.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lib.equipment.manager.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="material" schema=""></table>
+        <table tableName="out_storage" schema=""></table>
+        <table tableName="in_storage" schema=""></table>
+        <table tableName="storage" schema=""></table>
+        <table tableName="course_matrial" schema=""></table>
+        <table tableName="course" schema=""></table>
+        <table tableName="course_plan" schema=""></table>
+        <table tableName="permission" schema=""></table>
+        <table tableName="role_permission" schema=""></table>
+        <table tableName="role" schema=""></table>
+        <table tableName="user_role" schema=""></table>
+        <table tableName="user" schema=""></table>
+    </context>
+</generatorConfiguration>
