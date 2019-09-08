@@ -1,5 +1,6 @@
 package com.lib.equipment.manager.controller;
 
+import com.lib.equipment.manager.dto.StatusMsg;
 import com.lib.equipment.manager.dto.UpdateMaterial;
 import com.lib.equipment.manager.mapper.MaterialMapper;
 import com.lib.equipment.manager.model.Material;
@@ -19,6 +20,18 @@ import java.util.List;
 public class MaterialController {
     @Autowired
     private MaterialMapper materialMapper;
+
+    @PostMapping("/deleteOne")
+    @ResponseBody
+    public Object deleteOne(@RequestBody Material material){
+        if(material!=null&&!"".equals(material)){
+            int i = materialMapper.deleteByPrimaryKey(material.getId());
+            if(i!=0){
+                return new StatusMsg(1,"ok");
+            }
+        }
+        return new StatusMsg(1,"ok");
+    }
 
     @PostMapping("/update")
     public String materialupdate(UpdateMaterial updateMaterial,Model model){

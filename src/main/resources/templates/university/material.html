@@ -1012,20 +1012,49 @@
                                                 <th>单价</th>
                                                 <th>损耗率</th>
                                                 <th>备注</th>
-                                                
+                                                <td>action</td>
                                             </tr>
                                         </thead>
                                         <tbody th:if="${materials !=null}">
-                                            <tr th:each="material :${materials}">
-                                                <td th:text="${material.id}"></td>
+                                            <tr th:each="material,mStatus :${materials}">
+                                                <td th:text="${mStatus.count}"></td>
                                                 <td th:text="${material.name}"></td>
                                                 <td th:text="${material.specification}"></td>
                                                 <td th:text="${material.price}"></td>
                                                 <td th:text="${material.rate}"></td>
                                                 <td th:text="${material.remark}"></td>
-                                                
-                                            </tr>
 
+                                                <td><button id="delete" th:onclick="'javascript:deleteOne(\''+${material.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type=""><i class="fa fa-trash-o text-danger"></i></button></td>
+                                            </tr>
+                                            <script>
+                                                function deleteOne(id) {
+                                                    if(confirm("是否删除")){
+                                                        var url = "/material/deleteOne";
+                                                        // var data={'id':id};
+                                                        var datatype={"dataType":"json"}
+                                                        $.ajax({
+                                                            type:"POST",
+                                                            url:url,
+                                                            contentType: 'application/json',
+                                                            data: JSON.stringify({
+                                                                "id":id,
+
+                                                            }),
+                                                            success:function (data) {
+
+                                                                if(data.code==1){
+                                                                    alert("删除成功")
+                                                                }else {
+                                                                    alert("删除删除")
+                                                                }
+                                                                window.location.reload()
+                                                            },
+                                                            dataType:"json"
+                                                        })
+                                                    }
+
+                                                }
+                                            </script>
                                         </tbody>
                                     </table>
                                 </div>
