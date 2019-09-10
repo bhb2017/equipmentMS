@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class UserService {
     @Autowired
     private UserMapper userMapper;
@@ -133,5 +135,32 @@ public class UserService {
         for (Integer rid: roles) {
             userRoleMapper.insertSelective(new UserRole(user.getId(),rid));
         }
+    }
+
+    public void insertUserAndRole(UpdateUser addUser) {
+        User user = new User();
+        BeanUtils.copyProperties(addUser,user);
+        userMapper.insert(user);
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUsernameEqualTo(user.getUsername());
+        List<User> users = userMapper.selectByExample(userExample);
+        if(users!=null){
+            User u = users.get(0);
+            if(addUser.getRoles()!=null){
+                for (Integer role : addUser.getRoles()) {
+
+                    userRoleMapper.insertSelective(new UserRole(u.getId(),role));
+                }
+            }
+        }
+    }
+
+    public boolean deleteUser(Integer id) {
+        int i = userMapper.deleteByPrimaryKey(id);
+        if(i!=0){
+            return true;
+        }
+        return false;
     }
 }

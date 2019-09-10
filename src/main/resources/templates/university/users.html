@@ -1001,7 +1001,7 @@
                                 <tbody th:if="${users!=null}">
                                     <tr th:each="user,uStatus:${users}">
                                         <td th:text="${uStatus.count}"></td>
-                                        
+                                        <input id="uid" type="hidden" th:value="${user.id}">
                                         <td><span class="font-16" th:text="${user.username}"></span></td>
                                         <td><span th:each="role:${user.roles}" th:text="${role.roleName}+'/ '"></span></td>
 
@@ -1011,10 +1011,37 @@
                                         <td>
                                             <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                             <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
-                                            <button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
+                                            <button id="deleteUser" th:onclick="'javascript:deleteOne(\''+${user.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="" data-type=""><i class="fa fa-trash-o text-danger"></i></button>
                                         </td>
                                     </tr>
-                                                                      
+                                           <script>
+                                               function deleteOne(id) {
+                                                   if(confirm("是否删除")){
+                                                       var url = "/user/delete";
+                                                       // var data={'id':id};
+                                                       var datatype={"dataType":"json"}
+                                                       $.ajax({
+                                                           type:"POST",
+                                                           url:url,
+                                                           contentType: 'application/json',
+                                                           data: JSON.stringify({
+                                                               "id":id,
+
+                                                           }),
+                                                           success:function (data) {
+
+                                                               if(data.code==1){
+                                                                   alert("删除成功")
+                                                               }else {
+                                                                   alert("删除删除")
+                                                               }
+                                                           },
+                                                           dataType:"json"
+                                                       })
+                                                       window.location.href="/user/list"
+                                                   }
+                                               }
+                                           </script>
                                 </tbody>
                             </table>
                         </div>
@@ -1139,37 +1166,34 @@
                                             <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                         </div>
                                     </div>
-                                    <form class="card-body">
+                                    <form class="card-body" method="post" action="/user/add" id="userform">
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">用户名 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="输入真实姓名">
+                                                <font style="color: red" th:errors="${user.username}"></font>
+                                                <input type="text" name="username" class="form-control" placeholder="输入真实姓名">
                                             </div>
                                         </div>
                                        
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">密码<span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control">
+                                                <input name="password" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">手机号码</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control">
+                                                <font style="color: red" th:errors="${user.phone}"></font>
+                                                <input name="phone" type="text" class="form-control">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">设置角色 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <select class="form-control input-height" name="department">
-                                                    <option value="">Select...</option>
-                                                    <option value="Category 1">Computer</option>
-                                                    <option value="Category 2">Mechanical</option>
-                                                    <option value="Category 3">Mathematics</option>
-                                                    <option value="Category 3">Commerce</option>
-                                                </select>
+                                                <input  name="roles" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
+
                                             </div>
                                         </div>
                                          <div class="form-group row">
@@ -1221,7 +1245,7 @@
 <!-- Start Plugin Js -->
 
 
-
+<script src="/univer/validateUser.js"></script>
 <!-- Start project main js  and page js -->
 
 </body>

@@ -21,7 +21,7 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public String loginView(){
         return "university/login";
     }

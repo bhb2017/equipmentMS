@@ -34,7 +34,7 @@ public class MaterialController  {
                 return new StatusMsg(1,"ok");
             }
         }
-        return new StatusMsg(1,"ok");
+        return new StatusMsg(0,"fail");
     }
 
     @PostMapping("/update")
@@ -96,7 +96,6 @@ public class MaterialController  {
           }
           list(model);
           return "university/material";
-
 
     }
 }
