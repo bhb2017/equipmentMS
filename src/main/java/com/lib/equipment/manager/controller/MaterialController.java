@@ -9,15 +9,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @Slf4j
 @RequestMapping("/material")
-public class MaterialController {
+public class MaterialController  {
+
     @Autowired
     private MaterialMapper materialMapper;
 
@@ -61,8 +65,12 @@ public class MaterialController {
     }
 
     @GetMapping("/list")
-    public String material(Model model){
-        list(model);
+    public String material(Model model,@ModelAttribute("material") Material material){
+        try {
+            list(model);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "university/material";
     }
 
@@ -74,13 +82,21 @@ public class MaterialController {
         model.addAttribute("materials",materials);
     }
 
-    @PostMapping("/add")
-    public String materialAdd(Material material,Model model){
-      log.info("add material:",material.toString());
-        if(material!=null){
-            materialMapper.insertSelective(material);
-        }
-        list(model);
-        return "university/material";
+    @RequestMapping("/add")
+    public String materialAdd(@ModelAttribute("material") @Valid Material material, Model model,
+                              BindingResult result){
+
+          if(result.hasErrors()){
+              System.out.println("err");
+
+              return "redirect:/material/list";
+          }
+          if(material!=null){
+              materialMapper.insertSelective(material);
+          }
+          list(model);
+          return "university/material";
+
+
     }
 }

@@ -11,7 +11,6 @@
 <!-- Bootstrap Core and vandor -->
 <head th:insert="~{/university/import :: head}">
 </head>
-
 <body class="font-muli theme-cyan gradient">
 
 <!-- Page Loader -->
@@ -994,10 +993,11 @@
                                                                 }else {
                                                                     alert("删除删除")
                                                                 }
-                                                                window.location.reload()
                                                             },
                                                             dataType:"json"
                                                         })
+                                                        window.location.href="/material/list"
+
                                                     }
 
                                                 }
@@ -1017,33 +1017,38 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                             <form class="card-body" method="post" action="/material/add">
+                             <form id="addForm" class="card-body materialform" method="post" action="/material/add">
                                 <div class="form-group row">
+                                    <font color="red" th:errors="${material.name}"></font>
                                     <label class="col-md-3 col-form-label">器材名称</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <font color="red" th:errors="${material.specification}"></font>
                                     <label class="col-md-3 col-form-label">器材规格</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="specification">
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">器材单价<span class="text-danger">*</span></label>
+                                     <font color="red" th:errors="${material.price}"></font>
+                                     <label class="col-md-3 col-form-label">器材单价<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="price">
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">损耗率<span class="text-danger">*</span></label>
+                                     <font color="red" th:errors="${material.rate}"></font>
+                                     <label class="col-md-3 col-form-label">损耗率<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="rate">
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">备注<span class="text-danger">*</span></label>
+                                     <font color="red" th:errors="${material.remark}"></font>
+                                     <label class="col-md-3 col-form-label">备注<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="remark">
                                     </div>
@@ -1069,7 +1074,7 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                             <form class="card-body" method="post" action="/material/update">
+                             <form  class="card-body materialform" method="post" action="/material/update">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材名称<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
@@ -1160,6 +1165,7 @@
 </div>
 
 <!-- Start Main project js, jQuery, Bootstrap -->
+<script src="/univer/validateMaterial.js"></script>
 
 </body>
 </html>

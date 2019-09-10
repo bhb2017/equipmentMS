@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.lib.equipment.manager.mapper")
+@MapperScan(basePackages = "com.lib.equipment.manager.*")
 public class EquipmentMsApplication {
 
 	public static void main(String[] args) {
