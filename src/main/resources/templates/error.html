@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<head th:insert="~{/university/import :: head}">
+<body>
+<div class="jumbotron row" style="min-height: 300px;height: 528px;">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12"><h1>出错啦！！！</h1>
+        <p th:text="${message}">服务太热啦，要不然稍等下再来试试~</p>
+        <p><a class="btn btn-primary btn-lg" href="/home" role="button">回到主页</a></p>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        有需要请扫二维码：<img class="img-thumbnail" style="width: 35%;" src="/images/wechat.png">
+    </div>
+</div>
+</body>
+</html>

@@ -4,6 +4,8 @@ import com.lib.equipment.manager.dto.UpdateUser;
 import com.lib.equipment.manager.dto.UserDTO;
 import com.lib.equipment.manager.dto.UserData;
 import com.lib.equipment.manager.dto.UserSearch;
+import com.lib.equipment.manager.exception.CustomizeErrorCode;
+import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.RoleMapper;
 import com.lib.equipment.manager.mapper.UserMapper;
 import com.lib.equipment.manager.mapper.UserRoleMapper;
@@ -126,15 +128,22 @@ public class UserService {
         BeanUtils.copyProperties(updateUser,user);
         user.setId(updateUser.getId());
 
-        userMapper.updateByPrimaryKeySelective(user);
-        List<Integer> roles = updateUser.getRoles();
-        UserRoleExample userRoleExample = new UserRoleExample();
-        UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
-        criteria.andUserIdEqualTo(user.getId());
-        userRoleMapper.deleteByExample(userRoleExample);
-        for (Integer rid: roles) {
-            userRoleMapper.insertSelective(new UserRole(user.getId(),rid));
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if(i!=0) {
+            List<Integer> roles = updateUser.getRoles();
+            UserRoleExample userRoleExample = new UserRoleExample();
+            UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
+            criteria.andUserIdEqualTo(user.getId());
+            int i1 = userRoleMapper.deleteByExample(userRoleExample);
+
+            for (Integer rid : roles) {
+                userRoleMapper.insertSelective(new UserRole(user.getId(), rid));
+            }
+
+        }else {
+            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
         }
+
     }
 
     public void insertUserAndRole(UpdateUser addUser) {

@@ -4,6 +4,8 @@ import com.lib.equipment.manager.dto.StatusMsg;
 import com.lib.equipment.manager.dto.UpdateUser;
 import com.lib.equipment.manager.dto.UserData;
 import com.lib.equipment.manager.dto.UserSearch;
+import com.lib.equipment.manager.exception.CustomizeErrorCode;
+import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.model.Role;
 import com.lib.equipment.manager.model.User;
 import com.lib.equipment.manager.service.UserService;
@@ -53,8 +55,13 @@ public class UserController {
 
     @PostMapping("/update")
     public String update(UpdateUser updateUser){
+        try {
 
-        userService.updateUserInfo(updateUser);
+            userService.updateUserInfo(updateUser);
+        }catch (Exception e){
+            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+        }
+
         return "redirect:/user/list";
     }
 
@@ -93,7 +100,7 @@ public class UserController {
 
     @PostMapping("/search")
     public String search(UserSearch userSearch){
-        System.out.println(userSearch);
+
         List<UserData>users= userService.selectBySearch(userSearch);
 
         return "university/users";

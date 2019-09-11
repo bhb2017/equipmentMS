@@ -1,7 +1,10 @@
 package com.lib.equipment.manager.controller;
 
+import com.lib.equipment.manager.dto.ResultDTO;
 import com.lib.equipment.manager.dto.StatusMsg;
 import com.lib.equipment.manager.dto.UpdateMaterial;
+import com.lib.equipment.manager.exception.CustomizeErrorCode;
+import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.MaterialMapper;
 import com.lib.equipment.manager.model.Material;
 import com.lib.equipment.manager.model.MaterialExample;
@@ -32,6 +35,8 @@ public class MaterialController  {
             int i = materialMapper.deleteByPrimaryKey(material.getId());
             if(i!=0){
                 return new StatusMsg(1,"ok");
+            }else {
+                return ResultDTO.errorOf(CustomizeErrorCode.Object_Not_Found);
             }
         }
         return new StatusMsg(0,"fail");
@@ -45,7 +50,7 @@ public class MaterialController  {
         material.setRate(updateMaterial.getNewrate());
         material.setSpecification(updateMaterial.getNewspecification());
         material.setRemark(updateMaterial.getNewremark());
-        System.out.println(updateMaterial);
+        log.info("material:",material);
         materialMapper.updateByPrimaryKeySelective(material);
         list(model);
         return "university/material";
@@ -57,11 +62,17 @@ public class MaterialController  {
         ModelAndView mv = new ModelAndView();
         if(id!=null&&!"".equals(id)){
             Material material = materialMapper.selectByPrimaryKey(id);
-            mv.setViewName("university/material");
-            return material;
+            if(material!=null){
+                mv.setViewName("university/material");
+                return material;
+            }else {
+                throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+            }
+        }else {
+            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
         }
-        mv.setViewName("university/material");
-        return null;
+//        mv.setViewName("university/material");
+
     }
 
     @GetMapping("/list")

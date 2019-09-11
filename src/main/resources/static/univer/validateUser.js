@@ -29,7 +29,7 @@ $('#userform').bootstrapValidator({
         password: {
             validators: {
                 notEmpty: {
-                    message: '规格不能为空'
+                    message: '密码不能为空'
                 },
                 stringLength: {
                     min: 3,
