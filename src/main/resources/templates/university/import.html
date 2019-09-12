@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <html lang="en">
 <head  th:fragment="head">
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css" />
@@ -52,6 +52,7 @@
 </head>
 <body>
 
+
 <div th:fragment="navigation">
     <div id="left-sidebar" class="sidebar">
         <h5 class="brand-name">实验器材管理系统<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
@@ -67,10 +68,10 @@
                         <li><a href="professors.html"><i class="fa fa-black-tie"></i><span>Professors</span></a></li>
                         <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>Staff</span></a></li>
 
-                        <li><a href="/user/list"><i class="fa fa-users"></i><span>用户</span></a></li>
+                        <li shiro:hasRole="admin" shiro:hasPermission="/user/*"><a  href="/user/list"><i class="fa fa-users"></i><span>用户</span></a></li>
                         <li><a href="departments.html"><i class="fa fa-users"></i><span>库存管理</span></a></li>
 
-                        <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>
+                        <li shiro:hasRole="admin"><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>
                         <li><a href="/material/list"><i class="fa fa-book"></i><span>器材管理</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
                         <li class="g_heading">Extra</li>

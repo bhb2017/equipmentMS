@@ -6,10 +6,9 @@ import com.lib.equipment.manager.dto.UserData;
 import com.lib.equipment.manager.dto.UserSearch;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
-import com.lib.equipment.manager.mapper.RoleMapper;
-import com.lib.equipment.manager.mapper.UserMapper;
-import com.lib.equipment.manager.mapper.UserRoleMapper;
+import com.lib.equipment.manager.mapper.*;
 import com.lib.equipment.manager.model.*;
+import com.lib.equipment.manager.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -33,6 +34,10 @@ public class UserService {
     private UserRoleMapper userRoleMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
+    @Autowired
+    private PermissionMapper permissionMapper;
 
     public User login(UserDTO userDTO) {
         UserExample userExample =new UserExample();
@@ -149,6 +154,7 @@ public class UserService {
     public void insertUserAndRole(UpdateUser addUser) {
         User user = new User();
         BeanUtils.copyProperties(addUser,user);
+        user.setPassword(PasswordUtil.encodePwd(user.getPassword()));
         userMapper.insert(user);
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -171,5 +177,59 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public User findByUserName(String username) {
+//        List<User> list = userMapper.findByUserName(username);
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUsernameEqualTo(username);
+        List<User> list = userMapper.selectByExample(userExample);
+        if(list.size()<1){
+            throw  new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+        }else{
+            return list.get(0);
+        }
+    }
+
+    //根据用户名查找用户角色
+    public Set<String> findRoles(String username){
+        Set<String> roleNameSet = new HashSet<>();
+        Integer userId = findByUserName(username).getId();
+//        List<UserRole> usersRoleList = UserRoleExample.findByUserId(userId);
+        UserRoleExample userRoleExample = new UserRoleExample();
+        UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        List<UserRole> usersRoleList = userRoleMapper.selectByExample(userRoleExample);
+        for(int i = 0; i < usersRoleList.size(); i++){
+            Role role = roleMapper.selectByPrimaryKey(usersRoleList.get(i).getRoleId());
+            roleNameSet.add(role.getRoleName());
+        }
+        return roleNameSet;
+    }
+    //根据用户名查找用户权限
+    public Set<String> findPermissions(String username){
+        Set<String> permissionNameSet = new HashSet<>();
+        Integer userId = findByUserName(username).getId();
+        List<Integer> roleIdList = new ArrayList<>();
+//        List<UserRole> usersRoleList = usersRoleDao.findByUserId(userId);
+        UserRoleExample userRoleExample =new UserRoleExample();
+        UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        List<UserRole> usersRoleList = userRoleMapper.selectByExample(userRoleExample);
+        for(int i = 0; i < usersRoleList.size(); i++){
+            Integer roleId = roleMapper.selectByPrimaryKey(usersRoleList.get(i).getRoleId()).getId();
+            roleIdList.add(roleId);
+        }
+//        List<RolePermission> rolePermissionList = rolePermissionMapper.findByRoleIdIn(roleIdList);
+        RolePermissionExample rolePermissionExample =new RolePermissionExample();
+        RolePermissionExample.Criteria criteria1 = rolePermissionExample.createCriteria();
+        criteria1.andRoleIdIn(roleIdList);
+        List<RolePermission> rolePermissionList = rolePermissionMapper.selectByExample(rolePermissionExample);
+        for(int i = 0;i<rolePermissionList.size();i++){
+            Permission permission = permissionMapper.selectByPrimaryKey(rolePermissionList.get(i).getPermissionId());
+            permissionNameSet.add(permission.getPermissionName());
+        }
+        return permissionNameSet;
     }
 }
