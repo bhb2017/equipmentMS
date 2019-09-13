@@ -44,16 +44,22 @@ public class MaterialController  {
 
     @PostMapping("/update")
     public String materialupdate(UpdateMaterial updateMaterial,Model model){
-        Material material = new Material();
-        material.setId(updateMaterial.getNewid());
-        material.setPrice(updateMaterial.getNewprice());
-        material.setRate(updateMaterial.getNewrate());
-        material.setSpecification(updateMaterial.getNewspecification());
-        material.setRemark(updateMaterial.getNewremark());
-        log.info("material:",material);
-        materialMapper.updateByPrimaryKeySelective(material);
-        list(model);
-        return "university/material";
+            try {
+            Material material = new Material();
+            material.setId(updateMaterial.getNewid());
+            material.setPrice(updateMaterial.getNewprice());
+            material.setRate(updateMaterial.getNewrate());
+            material.setSpecification(updateMaterial.getNewspecification());
+            material.setRemark(updateMaterial.getNewremark());
+            log.info("material:",material);
+            materialMapper.updateByPrimaryKeySelective(material);
+            list(model);
+            return "university/material";
+        }catch (Exception e){
+            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+
+        }
+
     }
 
     @ResponseBody
@@ -76,7 +82,7 @@ public class MaterialController  {
     }
 
     @GetMapping("/list")
-    public String material(Model model,@ModelAttribute("material") Material material){
+    public String material(@ModelAttribute("material") Material material,Model model){
         try {
             list(model);
         }catch (Exception e){
@@ -94,7 +100,7 @@ public class MaterialController  {
     }
 
     @RequestMapping("/add")
-    public String materialAdd(@ModelAttribute("material") @Valid Material material, Model model,
+    public String materialAdd(@Valid Material material, Model model,
                               BindingResult result){
 
           if(result.hasErrors()){

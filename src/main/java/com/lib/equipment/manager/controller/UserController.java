@@ -72,13 +72,19 @@ public class UserController {
         if(id!=null&&!"".equals(id)){
             User user= userService.selectUserById(id);
             List<Role>roles= userService.selectRoleByUser(user);
-            UserData userData = new UserData();
-            userData.setId(user.getId());
-            userData.setUsername(user.getUsername());
-            userData.setPhone(user.getPhone());
-            userData.setPassword(user.getPassword());
-            userData.setRoles(roles);
-            return userData;
+            try {
+                UserData userData = new UserData();
+                userData.setId(user.getId());
+                userData.setUsername(user.getUsername());
+                userData.setPhone(user.getPhone());
+                userData.setPassword(user.getPassword());
+                userData.setRoles(roles);
+                return userData;
+            }catch (Exception e){
+                throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+
+            }
+
         }
         mv.setViewName("university/users");
         return null;

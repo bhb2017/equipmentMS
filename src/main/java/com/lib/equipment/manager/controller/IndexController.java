@@ -46,8 +46,9 @@ public class IndexController {
                 subject.login(token);
                 return "university/index";
             }catch (Exception e){
+                log.error("msg",e.getMessage());
                 model.addAttribute("msg","用户名或密码错误");
-                return "university/index";
+                return "university/login";
 
             }
         }else {
