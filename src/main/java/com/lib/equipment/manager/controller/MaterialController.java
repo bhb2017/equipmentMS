@@ -1,5 +1,10 @@
 package com.lib.equipment.manager.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.ResultDTO;
 import com.lib.equipment.manager.dto.StatusMsg;
 import com.lib.equipment.manager.dto.UpdateMaterial;
@@ -8,16 +13,27 @@ import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.MaterialMapper;
 import com.lib.equipment.manager.model.Material;
 import com.lib.equipment.manager.model.MaterialExample;
+import com.lib.equipment.manager.model.User;
+import com.lib.equipment.manager.utils.DemoDataListener;
+import com.lib.equipment.manager.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.List;
 
 @Controller
@@ -27,6 +43,68 @@ public class MaterialController  {
 
     @Autowired
     private MaterialMapper materialMapper;
+
+    @RequestMapping("/upload")
+    public String upload(HttpServletRequest request) throws Exception{
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file= multipartRequest.getFile("filename");
+
+        if(file.isEmpty()){
+            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+        }else {
+            try {
+
+                String filePath= file.getOriginalFilename();
+
+                File file1 = new File(filePath);
+//                file.transferTo(file1);
+                String absolutePath = file1.getAbsolutePath();
+
+                EasyExcel.read(absolutePath, Material.class, new DemoDataListener()).sheet().doRead();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        return "redirect:/material/list";
+    }
+
+    @RequestMapping("/read")
+    public void read(){
+        String fileName="C:\\Users\\cxq\\Desktop\\器材汇总表格.xlsx";
+        EasyExcel.read(fileName, Material.class, new DemoDataListener()).sheet().doRead();
+    }
+
+    @RequestMapping("/download")
+    public void downloadExcel(Model model, HttpServletResponse response) throws Exception {
+        ExcelWriter writer = null;
+        OutputStream out = null;
+        try {
+            MaterialExample materialExample = new MaterialExample();
+            materialExample.setOrderByClause("id desc");
+            List<Material> materials = materialMapper.selectByExample(materialExample);
+            ExcelUtils.exportExcel("器材汇总表格","器材",response,materials);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                writer.finish();
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
+
 
     @PostMapping("/deleteOne")
     @ResponseBody

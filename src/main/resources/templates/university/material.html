@@ -972,6 +972,15 @@
 
                                                 <td><button id="delete" th:onclick="'javascript:deleteOne(\''+${material.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type=""><i class="fa fa-trash-o text-danger"></i></button></td>
                                             </tr>
+                                            <div><a href="/material/download">导出Excel</a>
+                                            </div>
+                                            <!--<div><form method="post" enctype="multipart/form-data" id="form" action="/material/upload">
+                                                <input type="file" name="filename"/>
+                                                <input type="submit" value="提交上传"/>
+                                            </form>
+                                            </div>-->
+
+
                                             <script>
                                                 function deleteOne(id) {
                                                     if(confirm("是否删除")){

@@ -1,20 +1,25 @@
 package com.lib.equipment.manager.model;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.metadata.BaseRowModel;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
-public class Material {
+public class Material extends BaseRowModel {
     private Long id;
 
     @NotNull(message = "不能为空")
+    @ExcelProperty(value = "器材名",index = 0)
     private String name;
 
     @NotNull(message = "不能为空")
+    @ExcelProperty(value = "规格",index = 1)
     private String specification;
 
     public Long getId() {
@@ -67,13 +72,25 @@ public class Material {
 
     @DecimalMin("0.01")
     @NotNull
+    @ExcelProperty(value = "单价",index = 2)
     private Float price;
 
     @Digits(integer = 4, fraction = 2)
+    @ExcelProperty(value = "损耗率",index = 3)
     private Float rate;
 
-
+    @ExcelProperty(value = "备注",index = 4)
     private String remark;
 
-
+    @Override
+    public String toString() {
+        return "Material{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", specification='" + specification + '\'' +
+                ", price=" + price +
+                ", rate=" + rate +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }
