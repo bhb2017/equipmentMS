@@ -105,7 +105,13 @@ public class MaterialController  {
 
 
 
-
+    /*
+    * post请求
+    * 器材删除
+    * 前端ajax传递id用对象接收
+    * 根据id删除
+    * 删除失败抛出异常，全局异常接收
+    * */
     @PostMapping("/deleteOne")
     @ResponseBody
     public Object deleteOne(@RequestBody Material material){
@@ -119,7 +125,10 @@ public class MaterialController  {
         }
         return new StatusMsg(0,"fail");
     }
-
+    /*
+    * 更新器材
+    * 前端接收UpdateMaterial对象
+    * */
     @PostMapping("/update")
     public String materialupdate(UpdateMaterial updateMaterial,Model model){
             try {
@@ -139,7 +148,12 @@ public class MaterialController  {
         }
 
     }
-
+    /*
+    *  接收器材id mid
+    *  根据id查询具体的material
+    *  前端是一个ajax异步请求
+    *  返回一个Material对象
+    * */
     @ResponseBody
     @RequestMapping(value = "detail",method = RequestMethod.POST)
     public Material materialDetail(@RequestBody @RequestParam("mid")Long id){
@@ -159,6 +173,14 @@ public class MaterialController  {
 
     }
 
+    /**
+     *
+     * @param material
+     * @param model
+     * @return
+     * 传递model参数
+     * 调用list方法
+     */
     @GetMapping("/list")
     public String material(@ModelAttribute("material") Material material,Model model){
         try {
@@ -169,6 +191,12 @@ public class MaterialController  {
         return "university/material";
     }
 
+    /**
+     *
+     * @param model
+     * 根据id降序
+     * 获取material list
+     */
     private void list(Model model) {
         MaterialExample materialExample =new MaterialExample();
         materialExample.setOrderByClause("id desc");
@@ -177,6 +205,14 @@ public class MaterialController  {
         model.addAttribute("materials",materials);
     }
 
+    /**
+     * 添加器材
+     * 增加表单验证@Valid
+     * @param material
+     * @param model
+     * @param result 表单验证的参数
+     * @return
+     */
     @RequestMapping("/add")
     public String materialAdd(@Valid Material material, Model model,
                               BindingResult result){

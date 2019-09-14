@@ -1,4 +1,6 @@
 <!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -8,16 +10,11 @@
 <title>:: Ericsson :: Holiday</title>
 
 <!-- Bootstrap Core and vandor -->
-<link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css" />
-<link rel="stylesheet" href="../assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="../assets/plugins/datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../assets/plugins/fullcalendar/fullcalendar.min.css">
-<link rel="stylesheet" href="../assets/plugins/sweetalert/sweetalert.css">
 
 <!-- Core css -->
-<link rel="stylesheet" href="../assets/css/style.min.css"/>
 </head>
-
+<head th:insert="~{/university/import :: head}">
+</head>
 <body class="font-muli theme-cyan gradient">
 
 <!-- Page Loader -->
@@ -767,52 +764,8 @@
         </div>
     </div>
     <!-- Start Main leftbar navigation -->
-    <div id="left-sidebar" class="sidebar">
-        <h5 class="brand-name">器材管理系统<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
-        <ul class="nav nav-tabs">
-            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">University</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
-        </ul>
-        <div class="tab-content mt-3">
-            <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
-                <nav class="sidebar-nav">
-                    <ul class="metismenu">
-                        <li><a href="index.html"><i class="fa fa-dashboard"></i><span>导航</span></a></li>
-                        <li><a href="professors.html"><i class="fa fa-black-tie"></i><span>Professors</span></a></li>
-                        <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>Staff</span></a></li>
+    <div th:insert="~{/university/import :: navigation}"></div>
 
-                        <li><a href="users.html"><i class="fa fa-users"></i><span>用户</span></a></li>
-                        <li><a href="departments.html"><i class="fa fa-users"></i><span>库存管理</span></a></li>
-
-                        <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>                        
-                        <li><a href="material.html"><i class="fa fa-book"></i><span>器材管理</span></a></li>
-                        <li class="active"><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
-                        <li class="g_heading">Extra</li>
-                        <li><a href="events.html"><i class="fa fa-calendar"></i><span>Calender</span></a></li>
-                        <li><a href="app-chat.html"><i class="fa fa-comments-o"></i><span>Chat App</span></a></li>
-                        <li><a href="app-contact.html"><i class="fa fa-address-book"></i><span>库存日志</span></a></li>
-                        <li><a href="app-filemanager.html"><i class="fa fa-folder"></i><span>FileManager</span></a></li>
-                        <li><a href="our-centres.html"><i class="fa fa-map"></i><span>OurCentres</span></a></li>
-                        <li><a href="gallery.html"><i class="fa fa-camera-retro"></i><span>Gallery</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="tab-pane fade" id="menu-admin" role="tabpanel">
-                <nav class="sidebar-nav">
-                    <ul class="metismenu">
-                        <li><a href="payments.html"><i class="fa fa-credit-card"></i><span>Payments</span></a></li>
-                        <li><a href="noticeboard.html"><i class="fa fa-dashboard"></i><span>Noticeboard</span></a></li>
-                        <li><a href="taskboard.html"><i class="fa fa-list-ul"></i><span>Taskboard</span></a></li>
-                        <li><a href="hostel.html"><i class="fa fa-bed"></i><span>Hostel</span></a></li>
-                        <li><a href="transport.html"><i class="fa fa-truck"></i><span>Transport</span></a></li>
-                        <li><a href="attendance.html"><i class="fa fa-calendar-check-o"></i><span>Attendance</span></a></li>
-                        <li><a href="leave.html"><i class="fa fa-flag"></i><span>Leave</span></a></li>
-                        <li><a href="setting.html"><i class="fa fa-gear"></i><span>Settings</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
     <!-- Start project content area -->
     <div class="page">
         <!-- Start Page header -->
@@ -1011,25 +964,57 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body">        
+                            <form class="card-body" method="post" action="/calculate/list">
                                 
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">输入预测时间 <span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
+                                        <input name="forecasttime" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">提交</button>
-                                        <button type="submit" class="btn btn-outline-secondary">取消</button>
+                                        <button type="submit" class="btn btn-primary">确定</button>
+                                        <button type="reset" class="btn btn-outline-secondary">取消</button>
                                     </div>
                                 </div>
                             </form>
 
-                                
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>器材名</th>
+                                            <th>规格</th>
+                                            <th>单价</th>
+                                            <th>数量</th>
+                                            <th>总价</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>New Year's Day</td>
+                                            <td>Public Holiday</td>
+                                            <td>01 January 2019</td>
+                                            <td>03 January 2019</td>
+                                            <td>fds</td>
+                                            <td>
+                                                <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
+                                                <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="Holiday-all">
@@ -1302,18 +1287,9 @@
 
 
 <!-- Start Main project js, jQuery, Bootstrap -->
-<script src="../assets/bundles/lib.vendor.bundle.js"></script>
 
 <!-- Start Plugin Js -->
-<script src="../assets/plugins/sweetalert/sweetalert.min.js"></script>
-<script src="../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="../assets/bundles/dataTables.bundle.js"></script>
-<script src="../assets/bundles/fullcalendar.bundle.js"></script>
 
 <!-- Start project main js  and page js -->
-<script src="../assets/js/core.js"></script>
-<script src="../../static/univer/js/page/dialogs.js"></script>
-<script src="../../static/univer/js/table/datatable.js"></script>
-<script src="../../static/univer/js/page/calendar.js"></script>
 </body>
 </html>

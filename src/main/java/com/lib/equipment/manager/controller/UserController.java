@@ -28,6 +28,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 删除
+     * 根据id删除
+     * 前端ajax异步请求
+     * @param user
+     * @return
+     */
     @PostMapping("/delete")
     @ResponseBody
     public Object delete(@RequestBody User user){
@@ -41,11 +48,18 @@ public class UserController {
         return new StatusMsg(0,"fail");
     }
 
+    /**
+     * 添加用户
+     * form表单校验@Valid
+     * 校验规则看UpdateUser
+     * @param addUser
+     * @param result
+     * @return
+     */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public String addUser(@Valid UpdateUser addUser, BindingResult result){
         if(result.hasErrors()){
             System.out.println(result.getFieldError().getDefaultMessage());
-
         }
         addUser.setStatus(1);
         userService.insertUserAndRole(addUser);
@@ -53,6 +67,11 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+    /**
+     * 更新用户
+     * @param updateUser
+     * @return
+     */
     @PostMapping("/update")
     public String update(UpdateUser updateUser){
         try {
@@ -65,6 +84,12 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+    /**
+     * 与material/detail
+     * 方法一样
+     * @param id
+     * @return
+     */
     @PostMapping("/detail")
     @ResponseBody
     public UserData detail(@RequestBody @RequestParam("id") Integer id){
@@ -90,6 +115,12 @@ public class UserController {
         return null;
     }
 
+    /**
+     *
+     * @param user
+     * @param model
+     * @return
+     */
     @GetMapping("/list")
     public String userlist(@ModelAttribute("user")UpdateUser user, Model model){
         List<UserData> users= userService.selectUserAndRole();
@@ -104,6 +135,11 @@ public class UserController {
         return "university/users";
     }
 
+    /**
+     *搜索
+     * @param userSearch
+     * @return
+     */
     @PostMapping("/search")
     public String search(UserSearch userSearch){
 

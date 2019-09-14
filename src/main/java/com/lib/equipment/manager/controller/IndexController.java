@@ -35,6 +35,15 @@ public class IndexController {
         return "university/index";
     }
 
+    /**
+     * 登录
+     * 用md5对密码加密
+     * 登录交给shiro
+     * @param userDTO
+     * @param model
+     * @param request
+     * @return
+     */
     @PostMapping("/login")
     public String login(UserDTO userDTO, Model model, HttpServletRequest request){
         log.info("user:",userDTO);

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/assets/plugins/dropify/css/dropify.min.css">
 
     <link rel="stylesheet" href="/assets/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/assets/plugins/fullcalendar/fullcalendar.min.css">
 
 
 
@@ -29,6 +30,7 @@
     <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="/assets/bundles/dataTables.bundle.js"></script>
     <script src="/assets/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/assets/bundles/fullcalendar.bundle.js"></script>
 
     <!-- Start project main js  and page js -->
     <script src="/assets/js/core.js"></script>
@@ -46,6 +48,7 @@
     <script src="/univer/js/form/dropify.js"></script>
     <script src="/univer/js/page/index.js"></script>
     <script src="/univer/js/page/summernote.js"></script>
+    <script src="/univer/js/page/calendar.js"></script>
 
     <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
@@ -73,7 +76,7 @@
 
                         <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>
                         <li shiro:hasRole="admin"><a shiro:hasRole="admin" href="/material/list"><i class="fa fa-book"></i><span>器材管理</span></a></li>
-                        <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
+                        <li><a href="/calculate/list"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
                         <li class="g_heading">Extra</li>
                         <li><a href="events.html"><i class="fa fa-calendar"></i><span>Calender</span></a></li>
                         <li><a href="app-chat.html"><i class="fa fa-comments-o"></i><span>Chat App</span></a></li>
