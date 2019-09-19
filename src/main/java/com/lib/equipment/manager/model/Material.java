@@ -70,7 +70,7 @@ public class Material extends BaseRowModel {
         this.remark = remark;
     }
 
-    @DecimalMin("0.01")
+    @DecimalMin("0.001")
     @NotNull
     @ExcelProperty(value = "单价",index = 2)
     private Float price;
