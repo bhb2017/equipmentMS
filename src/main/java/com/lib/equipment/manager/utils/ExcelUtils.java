@@ -5,7 +5,9 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.BaseRowModel;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.lib.equipment.manager.excelDate.MaterialExcel;
 import com.lib.equipment.manager.model.Material;
+import org.apache.poi.ss.formula.functions.T;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
@@ -15,7 +17,8 @@ import java.util.List;
 
 public class ExcelUtils{
 
-    public static void exportExcel(String fileName,String sheetName,HttpServletResponse response,List<?extends BaseRowModel>data){
+    public static void exportExcel(String fileName, String sheetName, HttpServletResponse response,
+                                   List<?extends BaseRowModel>data, Object o){
 
         ExcelWriter writer = null;
         OutputStream out = null;
@@ -23,7 +26,7 @@ public class ExcelUtils{
             out = response.getOutputStream();
             writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
 //            String fileName = "器材汇总表格";
-            Sheet sheet = new Sheet(1, 0, Material.class);
+            Sheet sheet = new Sheet(1, 0, (Class<? extends BaseRowModel>) o);
             sheet.setSheetName(sheetName);
             writer.write(data, sheet);
             response.setCharacterEncoding("utf-8");
@@ -51,7 +54,7 @@ public class ExcelUtils{
     public static void writeExcel(String pathName, List<? extends BaseRowModel>dataInfo)throws Exception{
         OutputStream out = new FileOutputStream(pathName);
         ExcelWriter writer = EasyExcelFactory.getWriter(out);
-        Sheet sheet = new Sheet(1,0, Material.class);
+        Sheet sheet = new Sheet(1,0, MaterialExcel.class);
         sheet.setSheetName("material");
         writer.write(dataInfo,sheet);
         writer.finish();

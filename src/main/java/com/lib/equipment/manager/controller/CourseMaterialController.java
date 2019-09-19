@@ -1,17 +1,26 @@
 package com.lib.equipment.manager.controller;
 
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.metadata.BaseRowModel;
+import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.CourseMaterialDTO;
 import com.lib.equipment.manager.dto.CourseMaterialResDTO;
 import com.lib.equipment.manager.dto.ResultDTO;
 import com.lib.equipment.manager.dto.StatusMsg;
+import com.lib.equipment.manager.excelDate.CourseMaterialExcel;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.model.Course;
 import com.lib.equipment.manager.model.CourseMatrial;
 import com.lib.equipment.manager.model.Material;
+import com.lib.equipment.manager.model.MaterialExample;
 import com.lib.equipment.manager.service.CourseMaterialService;
 import com.lib.equipment.manager.service.CourseService;
 import com.lib.equipment.manager.service.MaterialSevice;
+import com.lib.equipment.manager.utils.ExcelUtils;
+import com.sun.deploy.net.HttpResponse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -19,7 +28,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +45,46 @@ public class CourseMaterialController {
     @Autowired
     private CourseMaterialService courseMaterialService;
 
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(HttpServletResponse response){
+        ExcelWriter writer = null;
+        OutputStream out = null;
+        try {
+
+            List<CourseMaterialResDTO> courseMaterialResDTOS= courseMaterialService.selectAll();
+            List<CourseMaterialExcel> courseMaterialExcels = new ArrayList<>();
+            for (CourseMaterialResDTO courseMaterialResDTO : courseMaterialResDTOS) {
+                CourseMaterialExcel courseMaterialExcel = new CourseMaterialExcel();
+                BeanUtils.copyProperties(courseMaterialResDTO,courseMaterialExcel);
+                courseMaterialExcels.add(courseMaterialExcel);
+            }
+//            ExcelUtils.exportExcel("课程所需详情表","课程所需详情",response,courseMaterialExcels,CourseMaterialExcel.class);
+            out = response.getOutputStream();
+            writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
+//            String fileName = "器材汇总表格";
+            Sheet sheet = new Sheet(1, 0, CourseMaterialExcel.class);
+            sheet.setSheetName("课程所需详情");
+            writer.write(courseMaterialExcels, sheet);
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String(("课程所需详情表" + ".xlsx").getBytes(), "ISO8859-1"));
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                writer.finish();
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @PostMapping("deleteOne")
     @ResponseBody

@@ -3,11 +3,13 @@ package com.lib.equipment.manager.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.metadata.BaseRowModel;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.ResultDTO;
 import com.lib.equipment.manager.dto.StatusMsg;
 import com.lib.equipment.manager.dto.UpdateMaterial;
+import com.lib.equipment.manager.excelDate.MaterialExcel;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.MaterialMapper;
@@ -17,6 +19,7 @@ import com.lib.equipment.manager.model.User;
 import com.lib.equipment.manager.utils.DemoDataListener;
 import com.lib.equipment.manager.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -84,8 +88,27 @@ public class MaterialController  {
             MaterialExample materialExample = new MaterialExample();
             materialExample.setOrderByClause("id desc");
             List<Material> materials = materialMapper.selectByExample(materialExample);
-            ExcelUtils.exportExcel("器材汇总表格","器材",response,materials);
+            List<MaterialExcel>materialExcels = new ArrayList<>();
+            for (Material material : materials) {
 
+                MaterialExcel materialExcel =new MaterialExcel();
+                BeanUtils.copyProperties(material,materialExcel);
+                materialExcels.add(materialExcel);
+
+            }
+
+//            ExcelUtils.exportExcel("器材汇总表格","器材",response,materials,MaterialExcel.class);
+
+            out = response.getOutputStream();
+            writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
+//            String fileName = "器材汇总表格";
+            Sheet sheet = new Sheet(1, 0, MaterialExcel.class);
+            sheet.setSheetName("器材");
+            writer.write(materialExcels, sheet);
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String(("器材汇总表格" + ".xlsx").getBytes(), "ISO8859-1"));
+            out.flush();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
