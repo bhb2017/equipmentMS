@@ -931,15 +931,15 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center ">
                     <div class="header-action">
-                        <h1 class="page-title">用户</h1>
+                        <h1 class="page-title">课程器材管理</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">器材管理</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">用户</li>
+                            <li class="breadcrumb-item"><a href="#">详细列表</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">添加详细列表</li>
                         </ol>
                     </div>
                     <ul class="nav nav-tabs page-header-tab">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Student-all">所需器材详细列</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Student-profile">修改用户信息</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Student-profile">修改具体详情</a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Student-add">添加</a></li>
                     </ul>
                 </div>
@@ -962,11 +962,7 @@
                                         <h3 class="panel-title">添加课程所需器材明细</h3>
                                     </div>
                                     <form action="" method="post">
-                                    <div class="panel-body form-inline" style="
-    margin-bottom: 30px;
-    margin-top: 30px;
-">
-
+                                    <div class="panel-body form-inline" style="margin-bottom: 30px;margin-top: 30px;                               ">
                                             <label>
                                                 课程:
                                                 <select id="cid" class="form-control input-height" name="course">
@@ -983,10 +979,7 @@
                                             <label>
                                                 每人所需量:<input id="per" type="text" class="form-control" name="per">
                                             </label>
-                                            <label>
-                                                所需时间: <input id="needTime" name="needTime" type="date" class="form-control" placeholder="">
 
-                                            </label>
                                             <input id="add" type="button" value="添加" name="add" class="btn btn-primary">
                                         </div>
                                         </form>
@@ -997,7 +990,7 @@
                                                     var cid = $("#cid").val()
                                                     var mid = $("#mid").val()
                                                     var per = $("#per").val()
-                                                    var needTime = $("#needTime").val()
+                                                    // var needTime = $("#needTime").val()
                                                     $.ajax({
                                                         type:"POST",
                                                         url:url,
@@ -1006,7 +999,7 @@
                                                             "cid":cid,
                                                             "mid":mid,
                                                             "per":per,
-                                                            "needTime":needTime
+                                                            // "needTime":needTime
                                                         }),
                                                         success:function (data) {
                                                             if(data.code==1){
@@ -1067,7 +1060,6 @@
                                         <th>课程</th>
                                         <th>器材</th>
                                         <th>每人所需量</th>
-                                        <th>所需时间</th>
                                         <td>操作</td>
                                     </tr>
                                     </thead>
@@ -1076,7 +1068,7 @@
                                         <th th:text="${d.courseName}+'/'+${d.courseNo}">{{ detail.courseName}}</th>
                                         <th th:text="${d.materialName}+'/'+${d.specification}"></th>
                                         <th th:text="${d.per}"></th>
-                                        <td class="needtime" th:text="${d.needTime}"></td>
+
                                         <td>
                                         <button id="delete" th:onclick="'javascript:deleteOne(\''+${d.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type=""><i class="fa fa-trash-o text-danger"></i></button>
 

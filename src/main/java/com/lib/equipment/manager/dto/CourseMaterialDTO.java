@@ -16,5 +16,5 @@ public class CourseMaterialDTO {
     @NotNull(message = "不能为空")
     private Integer per;
 
-    private String needTime;
+//    private String needTime;
 }

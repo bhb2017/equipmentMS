@@ -30,13 +30,13 @@ public class CourseMaterialService {
 
     public void insertDetail(CourseMaterialDTO courseMaterialDTO) throws ParseException {
         CourseMatrial courseMatrial = new CourseMatrial();
-        String needTime = courseMaterialDTO.getNeedTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date needtime=dateFormat.parse(needTime);
+//        String needTime = courseMaterialDTO.getNeedTime();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date needtime=dateFormat.parse(needTime);
 
         BeanUtils.copyProperties(courseMaterialDTO,courseMatrial);
         try {
-            courseMatrial.setNeedTime(needtime);
+//            courseMatrial.setNeedTime(needtime);
             courseMatrial.setCourseId(courseMaterialDTO.getCid());
             courseMatrial.setMaterialId(courseMaterialDTO.getMid());
 
@@ -66,9 +66,9 @@ public class CourseMaterialService {
                 courseMaterialResDTO.setMaterialName(materilName);
                 courseMaterialResDTO.setSpecification(specification);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String dateString = simpleDateFormat.format(courseMatrial.getNeedTime());
-                courseMaterialResDTO.setNeedTime(dateString);
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                String dateString = simpleDateFormat.format(courseMatrial.getNeedTime());
+//                courseMaterialResDTO.setNeedTime(dateString);
                 courseMaterialResDTOS.add(courseMaterialResDTO);
             }
             return courseMaterialResDTOS;

@@ -14,6 +14,6 @@ public class CourseMaterialResDTO {
     private String materialName;
     private Integer per;
 
-    private String needTime;
+//    private String needTime;//不再使用
     private String specification;
 }
