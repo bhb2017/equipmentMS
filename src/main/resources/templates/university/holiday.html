@@ -942,9 +942,9 @@
                     <ul class="nav nav-tabs page-header-tab">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Holiday-Calendar">器材预测
 </a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-all">所需器材清单</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-add">Add</a></li>
-                        <li class="nav-item"><a class="nav-link" id="Holiday-tab-Boot" data-toggle="tab" href="#Holiday-add-Boot">Add Bootstrap Style</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-all">所需器材清单</a></li>-->
+                        <!--<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-add">Add</a></li>-->
+                        <!--<li class="nav-item"><a class="nav-link" id="Holiday-tab-Boot" data-toggle="tab" href="#Holiday-add-Boot">Add Bootstrap Style</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -969,7 +969,11 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">输入预测时间 <span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input name="forecasttime" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
+                                        <select id="timeId" class="form-control input-height" name="cpid">
+                                            <option value="">选择时间.</option>
+                                            <option th:if="${schooltimes !=null}" th:each="schooltime : ${schooltimes}" th:value="${schooltime.schoolTime}" th:text="${schooltime.schoolTime}"></option>
+
+                                        </select>
                                     </div>
                                 </div>
                                
@@ -982,8 +986,10 @@
                                 </div>
                             </form>
 
+
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    <a href="/calculate/export">导出Excel</a>
                                     <table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">
                                         <thead>
                                         <tr>
@@ -991,19 +997,21 @@
                                             <th>器材名</th>
                                             <th>规格</th>
                                             <th>单价</th>
-                                            <th>数量</th>
-                                            <th>总价</th>
+                                            <th>所需数量</th>
+                                            <td>库存数量</td>
+                                            <!--<th>总价</th>-->
                                             <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>New Year's Day</td>
-                                            <td>Public Holiday</td>
-                                            <td>01 January 2019</td>
-                                            <td>03 January 2019</td>
-                                            <td>fds</td>
+                                        <tr th:if="${session.forecastDTOS !=null}" th:each="forecast,status:${session.forecastDTOS}">
+                                            <td th:text="${status.count}">1</td>
+                                            <td th:text="${forecast.materialName}">New Year's Day</td>
+                                            <td th:text="${forecast.specification}"></td>
+                                            <td th:text="${forecast.price}"></td>
+                                            <td th:text="${forecast.needNum}"></td>
+                                            <td th:text="${forecast.storageNum}"></td>
+
                                             <td>
                                                 <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                                 <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
@@ -1017,140 +1025,140 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="Holiday-all">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>器材名</th>
-                                                <th>规格</th>
-                                                <th>单价</th>
-                                                <th>数量</th>
-                                                <th>总价</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>New Year's Day</td>
-                                                <td>Public Holiday</td>
-                                                <td>01 January 2019</td>
-                                                <td>03 January 2019</td>
-                                                <td>fds</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
-                                                    <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
-                                                </td>
-                                            </tr>
-                                           
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="Holiday-add">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Add Holiday</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Title" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Holiday Type" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday Start Date">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday End Date">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-primary btn-lg btn-simple">Add Holiday</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="Holiday-add-Boot">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Add Library</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                                </div>
-                            </div>
-                            <form class="card-body">
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Title <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday Type  <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <select class="form-control input-height" name="type">
-                                            <option value="">Select...</option>
-                                            <option value="Category 1">Public Holiday</option>
-                                            <option value="Category 2">Holiday By University</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday Start Date <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday End Date <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday Details <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label"></label>
-                                    <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <!--<div class="tab-pane" id="Holiday-all">-->
+                        <!--<div class="card">-->
+                            <!--<div class="card-body">-->
+                                <!--<div class="table-responsive">-->
+                                    <!--<table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">-->
+                                        <!--<thead>-->
+                                            <!--<tr>-->
+                                                <!--<th>#</th>-->
+                                                <!--<th>器材名</th>-->
+                                                <!--<th>规格</th>-->
+                                                <!--<th>单价</th>-->
+                                                <!--<th>数量</th>-->
+                                                <!--<th>总价</th>-->
+                                                <!--<th>Status</th>-->
+                                            <!--</tr>-->
+                                        <!--</thead>-->
+                                        <!--<tbody>-->
+                                            <!--<tr>-->
+                                                <!--<td>1</td>-->
+                                                <!--<td>New Year's Day</td>-->
+                                                <!--<td>Public Holiday</td>-->
+                                                <!--<td>01 January 2019</td>-->
+                                                <!--<td>03 January 2019</td>-->
+                                                <!--<td>fds</td>-->
+                                                <!--<td>-->
+                                                    <!--<button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>-->
+                                                    <!--<button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>-->
+                                                    <!--<button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>-->
+                                                <!--</td>-->
+                                            <!--</tr>-->
+                                           <!---->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="tab-pane" id="Holiday-add">-->
+                        <!--<div class="card">-->
+                            <!--<div class="card-header">-->
+                                <!--<h3 class="card-title">Add Holiday</h3>-->
+                                <!--<div class="card-options ">-->
+                                    <!--<a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>-->
+                                    <!--<a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input type="text" value="" placeholder="Enter Title" class="form-control">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input type="text" value="" placeholder="Holiday Type" class="form-control">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday Start Date">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday End Date">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<button class="btn btn-primary btn-lg btn-simple">Add Holiday</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="tab-pane" id="Holiday-add-Boot">-->
+                        <!--<div class="card">-->
+                            <!--<div class="card-header">-->
+                                <!--<h3 class="card-title">Add Library</h3>-->
+                                <!--<div class="card-options ">-->
+                                    <!--<a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>-->
+                                    <!--<a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<form class="card-body">-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Title <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<input type="text" class="form-control">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday Type  <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<select class="form-control input-height" name="type">-->
+                                            <!--<option value="">Select...</option>-->
+                                            <!--<option value="Category 1">Public Holiday</option>-->
+                                            <!--<option value="Category 2">Holiday By University</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday Start Date <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday End Date <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday Details <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label"></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+                                        <!--<button type="submit" class="btn btn-outline-secondary">Cancel</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>

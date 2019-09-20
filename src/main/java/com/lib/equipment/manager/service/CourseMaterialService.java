@@ -9,6 +9,7 @@ import com.lib.equipment.manager.mapper.CourseMatrialMapper;
 import com.lib.equipment.manager.mapper.MaterialMapper;
 import com.lib.equipment.manager.model.CourseMatrial;
 import com.lib.equipment.manager.model.CourseMatrialExample;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CourseMaterialService {
     @Autowired
     private CourseMatrialMapper courseMatrialMapper;
@@ -42,6 +44,7 @@ public class CourseMaterialService {
 
             int i = courseMatrialMapper.insertSelective(courseMatrial);
         }catch (Exception e){
+            log.error("insertDetail",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
         }
 
@@ -73,6 +76,7 @@ public class CourseMaterialService {
             }
             return courseMaterialResDTOS;
         }catch (Exception e){
+            log.error("selectAll",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
         }
 
@@ -84,6 +88,7 @@ public class CourseMaterialService {
             CourseMatrial courseMatrial = courseMatrialMapper.selectByPrimaryKey(id);
             return courseMatrial;
         }catch (Exception e){
+            log.error("selectById",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
 
         }
@@ -95,6 +100,22 @@ public class CourseMaterialService {
             int i = courseMatrialMapper.deleteByPrimaryKey(courseMatrial1.getId());
             return i;
         }catch (Exception e){
+            log.error("delete",e.getMessage());
+            throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
+
+        }
+
+    }
+
+    public List<CourseMatrial> selectByCourseId(Integer courseId) {
+        try {
+            CourseMatrialExample courseMatrialExample = new CourseMatrialExample();
+            CourseMatrialExample.Criteria criteria = courseMatrialExample.createCriteria();
+            criteria.andCourseIdEqualTo(courseId);
+            List<CourseMatrial> courseMatrials = courseMatrialMapper.selectByExample(courseMatrialExample);
+            return courseMatrials;
+        }catch (Exception e){
+            log.error("selectByCourseId",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
 
         }
