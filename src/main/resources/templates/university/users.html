@@ -819,7 +819,7 @@
                                         <th>手机号码</th>
                                         <th>用户状态</th>
                                         
-                                        <th>Action</th>
+                                        <th>删除</th>
                                     </tr>
                                 </thead>
                                 <tbody th:if="${users!=null}">
@@ -833,8 +833,8 @@
                                         <td th:if="${user.status==1}"><span class="tag tag-success" >正常</span></td>
                                         <td th:if="${user.status==0}"><span class="tag tag-danger">已经删除</span></td>
                                         <td>
-                                            <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
-                                            <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
+                                            <!--<button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>-->
+                                            <!--<button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>-->
                                             <button id="deleteUser" th:onclick="'javascript:deleteOne(\''+${user.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="" data-type=""><i class="fa fa-trash-o text-danger"></i></button>
                                         </td>
                                     </tr>
@@ -1042,24 +1042,10 @@
                 </div>
             </div>
         </div>
-        <!-- Start main footer -->
+        <!-- Start assets footer -->
         <div class="section-body">
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            Copyright © 2019 <a href="https://themeforest.net/user/puffintheme/portfolio">PuffinTheme</a>.
-                        </div>
-                        <div class="col-md-6 col-sm-12 text-md-right">
-                            <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><a href="../doc/index.html">Documentation</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0)">FAQ</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0)" class="btn btn-outline-primary btn-sm">Buy Now</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <div th:insert="~{/university/import :: footer}"></div>
+
         </div>
     </div>    
 </div>
@@ -1070,7 +1056,7 @@
 
 
 <script src="/univer/validateUser.js"></script>
-<!-- Start project main js  and page js -->
+<!-- Start project assets js  and page js -->
 
 </body>
 </html>
