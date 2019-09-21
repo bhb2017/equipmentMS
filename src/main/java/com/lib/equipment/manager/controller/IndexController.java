@@ -51,8 +51,11 @@ public class IndexController {
             String newPassword= PasswordUtil.encodePwd(userDTO.getPassword());
             UsernamePasswordToken token = new UsernamePasswordToken(userDTO.getUsername(),newPassword);
             Subject subject = SecurityUtils.getSubject();
+            String user= (String) subject.getPrincipal();
             try {
                 subject.login(token);
+
+                request.getSession().setAttribute("user",user);
                 return "university/index";
             }catch (Exception e){
                 log.error("msg",e.getMessage());

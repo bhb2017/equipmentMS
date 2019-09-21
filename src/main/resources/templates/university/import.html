@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <html lang="en">
 <head  th:fragment="head">
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css" />
@@ -61,14 +63,14 @@
         <h5 class="brand-name">实验器材管理系统<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">通用</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
+            <!--<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>-->
         </ul>
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
                 <nav class="sidebar-nav">
                     <ul class="metismenu">
                         <li class="active"><a href="/home"><i class="fa fa-dashboard"></i><span>导航</span></a></li>
-                        <li><a href="professors.html"><i class="fa fa-black-tie"></i><span>Professors</span></a></li>
+                        <!--<li><a href="professors.html"><i class="fa fa-black-tie"></i><span>Professors</span></a></li>-->
                         <li><a href="/coursematerial/list"><i class="fa fa-user-circle-o"></i><span>课程器材管理</span></a></li>
 
                         <li shiro:hasRole="admin"><a  href="/user/list"><i class="fa fa-users"></i><span>用户</span></a></li>
@@ -100,6 +102,108 @@
                         <li><a href="setting.html"><i class="fa fa-gear"></i><span>Settings</span></a></li>
                     </ul>
                 </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="page_top">
+    <div class="section-body" id="page_top" >
+        <div class="container-fluid">
+            <div class="page-header">
+                <div class="left">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+
+                    <div class="notification d-flex">
+
+                        <div class="dropdown d-flex">
+                            <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success nav-unread"></span></a>
+                            <!---->
+                        </div>
+                        <div class="dropdown d-flex">
+                            <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-primary nav-unread"></span></a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <!--<ul class="list-unstyled feeds_widget">-->
+                                    <!--<li>-->
+                                        <!--<div class="feeds-left">-->
+                                            <!--<span class="avatar avatar-blue"><i class="fa fa-check"></i></span>-->
+                                        <!--</div>-->
+                                        <!--<div class="feeds-body ml-3">-->
+                                            <!--<p class="text-muted mb-0">Campaign <strong class="text-blue font-weight-bold">Holiday</strong> is nearly reach budget limit.</p>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<div class="feeds-left">-->
+                                            <!--<span class="avatar avatar-green"><i class="fa fa-user"></i></span>-->
+                                        <!--</div>-->
+                                        <!--<div class="feeds-body ml-3">-->
+                                            <!--<p class="text-muted mb-0">New admission <strong class="text-green font-weight-bold">32</strong> in computer department.</p>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<div class="feeds-left">-->
+                                            <!--<span class="avatar avatar-red"><i class="fa fa-info"></i></span>-->
+                                        <!--</div>-->
+                                        <!--<div class="feeds-body ml-3">-->
+                                            <!--<p class="text-muted mb-0">6th sem result <strong class="text-red font-weight-bold">67%</strong> in computer department.</p>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<div class="feeds-left">-->
+                                            <!--<span class="avatar avatar-azure"><i class="fa fa-thumbs-o-up"></i></span>-->
+                                        <!--</div>-->
+                                        <!--<div class="feeds-body ml-3">-->
+                                            <!--<p class="text-muted mb-0">New Feedback <strong class="text-azure font-weight-bold">53</strong> for university assessment.</p>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item text-center text-muted-dark readall">消息</a>
+                            </div>
+                        </div>
+                        <div class="dropdown d-flex">
+                            <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown">
+                                <span class="avatar" style="background-image: url(/images/default-avatar.png)"></span><span th:text="${session.user}"></span> </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="/user/list"><i class="dropdown-icon fe fe-user"></i> 个人信息</a>
+                                <!--<a class="dropdown-item" href="app-setting.html"><i class="dropdown-icon fe fe-settings"></i> Settings</a>-->
+                                <!--<a class="dropdown-item" href="app-email.html"><span class="float-right"><span class="badge badge-primary">6</span></span><i class="dropdown-icon fe fe-mail"></i> Inbox</a>-->
+                                <!--<a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-send"></i> Message</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-help-circle"></i>需要帮忙？</a>
+                                <a class="dropdown-item" href="/logout"><i class="dropdown-icon fe fe-log-out"></i> 退出</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="header_top">
+    <div id="header_top" class="header_top">
+        <div class="container">
+            <div class="hleft">
+                <a class="header-brand" href="index.html"><i class="fa fa-graduation-cap brand-logo"></i></a>
+                <div class="dropdown">
+                    <a href="javascript:void(0)" class="nav-link icon menu_toggle"><i class="fe fe-align-center"></i></a>
+                    <a href="javascript:void(0)" class="nav-link icon"><i class="fe fe-search" data-toggle="tooltip" data-placement="right" title="Search..."></i></a>
+                    <a href="javascript:void(0)"  class="nav-link icon app_inbox"><i class="fe fe-inbox" data-toggle="tooltip" data-placement="right" title="Inbox"></i></a>
+                    <a href="javascript:void(0)"  class="nav-link icon app_file xs-hide"><i class="fe fe-folder" data-toggle="tooltip" data-placement="right" title="File Manager"></i></a>
+                    <a href="javascript:void(0)"  class="nav-link icon xs-hide"><i class="fe fe-share-2" data-toggle="tooltip" data-placement="right" title="Social Media"></i></a>
+                    <a href="javascript:void(0)" class="nav-link icon theme_btn"><i class="fe fe-feather"></i></a>
+                    <a href="javascript:void(0)" class="nav-link icon settingbar"><i class="fe fe-settings"></i></a>
+                </div>
+            </div>
+            <div class="hright">
+                <!--<a href="javascript:void(0)" class="nav-link icon right_tab"><i class="fe fe-align-right"></i></a>-->
+                <a href="login.html" class="nav-link icon settingbar"><i class="fe fe-power"></i></a>
             </div>
         </div>
     </div>
