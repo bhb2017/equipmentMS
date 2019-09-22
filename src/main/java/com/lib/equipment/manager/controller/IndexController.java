@@ -45,13 +45,19 @@ public class IndexController {
      * @return
      */
     @PostMapping("/login")
-    public String login(UserDTO userDTO, Model model, HttpServletRequest request){
+    public String login(UserDTO userDTO, Model model,
+                        HttpServletRequest request,
+                        Integer rememberme){
         log.info("user:",userDTO);
         if((userDTO.getUsername()!=null&&!"".equals(userDTO.getUsername()))&&(userDTO.getPassword()!=null&&!"".equals(userDTO.getPassword()))){
             String newPassword= PasswordUtil.encodePwd(userDTO.getPassword());
             UsernamePasswordToken token = new UsernamePasswordToken(userDTO.getUsername(),newPassword);
             Subject subject = SecurityUtils.getSubject();
             String user= (String) subject.getPrincipal();
+            if(rememberme!=null&&rememberme==1){
+                token.setRememberMe(true);
+
+            }
             try {
                 subject.login(token);
 

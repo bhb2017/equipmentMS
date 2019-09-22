@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("/delete")
     @ResponseBody
     public Object delete(@RequestBody User user){
-        System.out.println(user.getId());
+
         if(user.getId()!=null){
             boolean b = userService.deleteUser(user.getId());
             if(b){

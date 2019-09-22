@@ -7,7 +7,10 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,11 +28,13 @@ public class ShiroConfig {
         //拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/logout", "anon");
+        filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/user/*", "perms[/user/*]");
         filterChainDefinitionMap.put("/material/*", "perms[/material/*]");
+        filterChainDefinitionMap.put("/calculate/*", "perms[/calculate/*]");
+
 
         //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
@@ -51,8 +56,34 @@ public class ShiroConfig {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myShiroRealm());
+        securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
+    @Bean
+    public SimpleCookie rememberMeCookie(){
+        SimpleCookie simpleCookie = new SimpleCookie("rememberme");
+        simpleCookie.setMaxAge(30*60*60);
+        return simpleCookie;
+    }
+
+    @Bean
+    public CookieRememberMeManager rememberMeManager(){
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        return cookieRememberMeManager;
+    }
+
+    /**
+     * 记住密码 相关操作
+     * @return
+     */
+    @Bean
+    public FormAuthenticationFilter formAuthenticationFilter() {
+        FormAuthenticationFilter formAuthenticationFilter = new FormAuthenticationFilter();
+        formAuthenticationFilter.setRememberMeParam("rememberme");
+        return formAuthenticationFilter;
+    }
+
     @Bean(name="lifecycleBeanPostProcessor")
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
