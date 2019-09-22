@@ -70,6 +70,8 @@ public class MaterialController  {
         return "redirect:/material/list";
     }
 
+//器材汇总表格导出下载
+
     @RequestMapping("/read")
     public void read(){
         String fileName="C:\\Users\\cxq\\Desktop\\器材汇总表格.xlsx";
