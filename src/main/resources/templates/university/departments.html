@@ -777,7 +777,7 @@
                     <ul class="metismenu">
                         <li><a href="index.html"><i class="fa fa-dashboard"></i><span>导航</span></a></li>
                         <li><a href="professors.html"><i class="fa fa-black-tie"></i><span>Professors</span></a></li>
-                        <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>Staff</span></a></li>
+                        <li><a href="per.html"><i class="fa fa-user-circle-o"></i><span>Staff</span></a></li>
 
                         <li><a href="users.html"><i class="fa fa-users"></i><span>用户</span></a></li>
                         <li class="active"><a href="departments.html"><i class="fa fa-users"></i><span>库存管理</span></a></li>
@@ -1223,24 +1223,10 @@
                 </div>
             </div>
         </div>
-        <!-- Start main footer -->
+        <!-- Start assets footer -->
         <div class="section-body">
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            Copyright © 2019 <a href="https://themeforest.net/user/puffintheme/portfolio">PuffinTheme</a>.
-                        </div>
-                        <div class="col-md-6 col-sm-12 text-md-right">
-                            <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><a href="../doc/index.html">Documentation</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0)">FAQ</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0)" class="btn btn-outline-primary btn-sm">Buy Now</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <div th:insert="~{/university/import :: footer}"></div>
+
         </div>
     </div>    
 </div>
@@ -1252,7 +1238,7 @@
 <script src="../assets/plugins/sweetalert/sweetalert.min.js"></script>
 <script src="../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 
-<!-- Start project main js  and page js -->
+<!-- Start project assets js  and page js -->
 <script src="../assets/js/core.js"></script>
 <script src="../../static/univer/js/page/dialogs.js"></script>
 </body>

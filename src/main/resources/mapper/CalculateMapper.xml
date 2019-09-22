@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.equipment.manager.mapper.CalculateMapper">
+
+
+    <select id="selectByDate" parameterType="java.lang.String" resultType="com.lib.equipment.manager.dto.ForecastTempDTO">
+
+
+SELECT material.`name` as materialName,material.specification as specification,
+material.price as price,course_plan.num as courseNum,
+course_matrial.per as per,`storage`.num as storageNum ,material.rate as rate,
+CEIL((course_matrial.per*course_plan.num)*(1+material.rate)) as needNum
+
+from course_plan INNER JOIN course_matrial
+on course_plan.id=course_matrial.course_id
+LEFT JOIN course on course.id=course_plan.course_id
+LEFT JOIN material
+on material.id=course_matrial.material_id
+LEFT JOIN `storage` on `storage`.material_id =material.id
+WHERE school_time=#{date}
+    </select>
+
+</mapper>

@@ -25,26 +25,7 @@
 
 <div id="main_content">
     <!-- Start Main top header -->
-    <div id="header_top" class="header_top">
-        <div class="container">
-            <div class="hleft">
-                <a class="header-brand" href="index.html"><i class="fa fa-graduation-cap brand-logo"></i></a>
-                <div class="dropdown">
-                    <a href="javascript:void(0)" class="nav-link icon menu_toggle"><i class="fe fe-align-center"></i></a>
-                    <a href="page-search.html" class="nav-link icon"><i class="fe fe-search" data-toggle="tooltip" data-placement="right" title="Search..."></i></a>
-                    <a href="app-email.html"  class="nav-link icon app_inbox"><i class="fe fe-inbox" data-toggle="tooltip" data-placement="right" title="Inbox"></i></a>
-                    <a href="app-filemanager.html"  class="nav-link icon app_file xs-hide"><i class="fe fe-folder" data-toggle="tooltip" data-placement="right" title="File Manager"></i></a>
-                    <a href="app-social.html"  class="nav-link icon xs-hide"><i class="fe fe-share-2" data-toggle="tooltip" data-placement="right" title="Social Media"></i></a>
-                    <a href="javascript:void(0)" class="nav-link icon theme_btn"><i class="fe fe-feather"></i></a>
-                    <a href="javascript:void(0)" class="nav-link icon settingbar"><i class="fe fe-settings"></i></a>
-                </div>
-            </div>
-            <div class="hright">
-                <a href="javascript:void(0)" class="nav-link icon right_tab"><i class="fe fe-align-right"></i></a>
-                <a href="login.html" class="nav-link icon settingbar"><i class="fe fe-power"></i></a>                
-            </div>
-        </div>
-    </div>
+    <div th:insert="~{/university/import :: header_top}"></div>
     <!-- Start Rightbar setting panel -->
     <div id="rightsidebar" class="right_sidebar">
         <a href="javascript:void(0)" class="p-3 settingbar float-right"><i class="fa fa-close"></i></a>
@@ -769,165 +750,8 @@
     <!-- Start project content area -->
     <div class="page">
         <!-- Start Page header -->
-        <div class="section-body" id="page_top" >
-            <div class="container-fluid">
-                <div class="page-header">
-                    <div>                        
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="What you want to find">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Search</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="page-empty.html">Empty page</a>
-                                    <a class="dropdown-item" href="page-profile.html">Profile</a>
-                                    <a class="dropdown-item" href="page-search.html">Search Results</a>
-                                    <a class="dropdown-item" href="page-timeline.html">Timeline</a>
-                                    <a class="dropdown-item" href="page-invoices.html">Invoices</a>
-                                    <a class="dropdown-item" href="page-pricing.html">Pricing</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Auth</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="login.html">Login</a>
-                                    <a class="dropdown-item" href="register.html">Register</a>
-                                    <a class="dropdown-item" href="forgot-password.html">Forgot password</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="404.html">404 error</a>
-                                    <a class="dropdown-item" href="500.html">500 error</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="notification d-flex">
-                            <div class="dropdown d-flex">
-                                <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-language"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" href="#"><img class="w20 mr-2" src="../assets/images/flags/us.svg" alt="">English</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><img class="w20 mr-2" src="../assets/images/flags/es.svg" alt="">Spanish</a>
-                                    <a class="dropdown-item" href="#"><img class="w20 mr-2" src="../assets/images/flags/jp.svg" alt="">japanese</a>
-                                    <a class="dropdown-item" href="#"><img class="w20 mr-2" src="../assets/images/flags/bl.svg" alt="">France</a>
-                                </div>
-                            </div>
-                            <div class="dropdown d-flex">
-                                <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success nav-unread"></span></a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <ul class="right_chat list-unstyled w350 p-0">
-                                        <li class="online">
-                                            <a href="javascript:void(0);" class="media">
-                                                <img class="media-object" src="../assets/images/xs/avatar4.jpg" alt="">
-                                                <div class="media-body">
-                                                    <span class="name">Donald Gardner</span>
-                                                    <div class="message">It is a long established fact that a reader</div>
-                                                    <small>11 mins ago</small>
-                                                    <span class="badge badge-outline status"></span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="online">
-                                            <a href="javascript:void(0);" class="media">
-                                                <img class="media-object " src="../assets/images/xs/avatar5.jpg" alt="">
-                                                <div class="media-body">
-                                                    <span class="name">Wendy Keen</span>
-                                                    <div class="message">There are many variations of passages of Lorem Ipsum</div>
-                                                    <small>18 mins ago</small>
-                                                    <span class="badge badge-outline status"></span>
-                                                </div>
-                                            </a>                            
-                                        </li>
-                                        <li class="offline">
-                                            <a href="javascript:void(0);" class="media">
-                                                <img class="media-object " src="../assets/images/xs/avatar2.jpg" alt="">
-                                                <div class="media-body">
-                                                    <span class="name">Matt Rosales</span>
-                                                    <div class="message">Contrary to popular belief, Lorem Ipsum is not simply</div>
-                                                    <small>27 mins ago</small>
-                                                    <span class="badge badge-outline status"></span>
-                                                </div>
-                                            </a>                            
-                                        </li>
-                                        <li class="online">
-                                            <a href="javascript:void(0);" class="media">
-                                                <img class="media-object " src="../assets/images/xs/avatar3.jpg" alt="">
-                                                <div class="media-body">
-                                                    <span class="name">Phillip Smith</span>
-                                                    <div class="message">It has roots in a piece of classical Latin literature from 45 BC</div>
-                                                    <small>33 mins ago</small>
-                                                    <span class="badge badge-outline status"></span>
-                                                </div>
-                                            </a>                            
-                                        </li>                        
-                                    </ul>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="javascript:void(0)" class="dropdown-item text-center text-muted-dark readall">Mark all as read</a>
-                                </div>
-                            </div>
-                            <div class="dropdown d-flex">
-                                <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-primary nav-unread"></span></a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <ul class="list-unstyled feeds_widget">
-                                        <li>
-                                            <div class="feeds-left">
-                                                <span class="avatar avatar-blue"><i class="fa fa-check"></i></span>
-                                            </div>
-                                            <div class="feeds-body ml-3">
-                                                <p class="text-muted mb-0">Campaign <strong class="text-blue font-weight-bold">器材预测</strong> is nearly reach budget limit.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="feeds-left">
-                                                <span class="avatar avatar-green"><i class="fa fa-user"></i></span>
-                                            </div>
-                                            <div class="feeds-body ml-3">
-                                                <p class="text-muted mb-0">New admission <strong class="text-green font-weight-bold">32</strong> in computer department.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="feeds-left">
-                                                <span class="avatar avatar-red"><i class="fa fa-info"></i></span>
-                                            </div>
-                                            <div class="feeds-body ml-3">
-                                                <p class="text-muted mb-0">6th sem result <strong class="text-red font-weight-bold">67%</strong> in computer department.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="feeds-left">
-                                                <span class="avatar avatar-azure"><i class="fa fa-thumbs-o-up"></i></span>
-                                            </div>
-                                            <div class="feeds-body ml-3">
-                                                <p class="text-muted mb-0">New Feedback <strong class="text-azure font-weight-bold">53</strong> for university assessment.</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="javascript:void(0)" class="dropdown-item text-center text-muted-dark readall">Mark all as read</a>
-                                </div>
-                            </div>
-                            <div class="dropdown d-flex">
-                                <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown">
-                                    <span class="avatar" style="background-image: url(../assets/images/xs/avatar5.jpg)"></span> George</a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" href="page-profile.html"><i class="dropdown-icon fe fe-user"></i> Profile</a>
-                                    <a class="dropdown-item" href="app-setting.html"><i class="dropdown-icon fe fe-settings"></i> Settings</a>
-                                    <a class="dropdown-item" href="app-email.html"><span class="float-right"><span class="badge badge-primary">6</span></span><i class="dropdown-icon fe fe-mail"></i> Inbox</a>
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-send"></i> Message</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-help-circle"></i> Need help?</a>
-                                    <a class="dropdown-item" href="login.html"><i class="dropdown-icon fe fe-log-out"></i> Sign out</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div th:insert="~{/university/import :: page_top}"></div>
+
         <!-- Start Page title and tab -->
         <div class="section-body">
             <div class="container-fluid">
@@ -942,9 +766,9 @@
                     <ul class="nav nav-tabs page-header-tab">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Holiday-Calendar">器材预测
 </a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-all">所需器材清单</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-add">Add</a></li>
-                        <li class="nav-item"><a class="nav-link" id="Holiday-tab-Boot" data-toggle="tab" href="#Holiday-add-Boot">Add Bootstrap Style</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-all">所需器材清单</a></li>-->
+                        <!--<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Holiday-add">Add</a></li>-->
+                        <!--<li class="nav-item"><a class="nav-link" id="Holiday-tab-Boot" data-toggle="tab" href="#Holiday-add-Boot">Add Bootstrap Style</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -969,7 +793,11 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">输入预测时间 <span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input name="forecasttime" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
+                                        <select id="timeId" class="form-control input-height" name="cpid">
+                                            <option value="">选择时间.</option>
+                                            <option th:if="${schooltimes !=null}" th:each="schooltime : ${schooltimes}" th:value="${schooltime.schoolTime}" th:text="${schooltime.schoolTime}"></option>
+
+                                        </select>
                                     </div>
                                 </div>
                                
@@ -982,8 +810,10 @@
                                 </div>
                             </form>
 
+
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    <a href="/calculate/export">导出Excel</a>
                                     <table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">
                                         <thead>
                                         <tr>
@@ -991,19 +821,21 @@
                                             <th>器材名</th>
                                             <th>规格</th>
                                             <th>单价</th>
-                                            <th>数量</th>
-                                            <th>总价</th>
+                                            <th>所需数量</th>
+                                            <td>库存数量</td>
+                                            <!--<th>总价</th>-->
                                             <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>New Year's Day</td>
-                                            <td>Public Holiday</td>
-                                            <td>01 January 2019</td>
-                                            <td>03 January 2019</td>
-                                            <td>fds</td>
+                                        <tr th:if="${session.forecastDTOS !=null}" th:each="forecast,status:${session.forecastDTOS}">
+                                            <td th:text="${status.count}">1</td>
+                                            <td th:text="${forecast.materialName}">New Year's Day</td>
+                                            <td th:text="${forecast.specification}"></td>
+                                            <td th:text="${forecast.price}"></td>
+                                            <td th:text="${forecast.needNum}"></td>
+                                            <td th:text="${forecast.storageNum}"></td>
+
                                             <td>
                                                 <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                                 <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
@@ -1017,161 +849,148 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="Holiday-all">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>器材名</th>
-                                                <th>规格</th>
-                                                <th>单价</th>
-                                                <th>数量</th>
-                                                <th>总价</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>New Year's Day</td>
-                                                <td>Public Holiday</td>
-                                                <td>01 January 2019</td>
-                                                <td>03 January 2019</td>
-                                                <td>fds</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>
-                                                    <button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
-                                                </td>
-                                            </tr>
-                                           
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="Holiday-add">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Add Holiday</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Enter Title" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" value="" placeholder="Holiday Type" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday Start Date">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday End Date">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-primary btn-lg btn-simple">Add Holiday</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="Holiday-add-Boot">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Add Library</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                                </div>
-                            </div>
-                            <form class="card-body">
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Title <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday Type  <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <select class="form-control input-height" name="type">
-                                            <option value="">Select...</option>
-                                            <option value="Category 1">Public Holiday</option>
-                                            <option value="Category 2">Holiday By University</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday Start Date <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday End Date <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Holiday Details <span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label"></label>
-                                    <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <!--<div class="tab-pane" id="Holiday-all">-->
+                        <!--<div class="card">-->
+                            <!--<div class="card-body">-->
+                                <!--<div class="table-responsive">-->
+                                    <!--<table class="table table-hover table-vcenter text-nowrap js-basic-example dataTable table-striped table_custom border-style spacing5">-->
+                                        <!--<thead>-->
+                                            <!--<tr>-->
+                                                <!--<th>#</th>-->
+                                                <!--<th>器材名</th>-->
+                                                <!--<th>规格</th>-->
+                                                <!--<th>单价</th>-->
+                                                <!--<th>数量</th>-->
+                                                <!--<th>总价</th>-->
+                                                <!--<th>Status</th>-->
+                                            <!--</tr>-->
+                                        <!--</thead>-->
+                                        <!--<tbody>-->
+                                            <!--<tr>-->
+                                                <!--<td>1</td>-->
+                                                <!--<td>New Year's Day</td>-->
+                                                <!--<td>Public Holiday</td>-->
+                                                <!--<td>01 January 2019</td>-->
+                                                <!--<td>03 January 2019</td>-->
+                                                <!--<td>fds</td>-->
+                                                <!--<td>-->
+                                                    <!--<button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>-->
+                                                    <!--<button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>-->
+                                                    <!--<button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>-->
+                                                <!--</td>-->
+                                            <!--</tr>-->
+                                           <!---->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="tab-pane" id="Holiday-add">-->
+                        <!--<div class="card">-->
+                            <!--<div class="card-header">-->
+                                <!--<h3 class="card-title">Add Holiday</h3>-->
+                                <!--<div class="card-options ">-->
+                                    <!--<a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>-->
+                                    <!--<a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input type="text" value="" placeholder="Enter Title" class="form-control">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input type="text" value="" placeholder="Holiday Type" class="form-control">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday Start Date">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-6">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Holiday End Date">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-12">-->
+                                        <!--<button class="btn btn-primary btn-lg btn-simple">Add Holiday</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="tab-pane" id="Holiday-add-Boot">-->
+                        <!--<div class="card">-->
+                            <!--<div class="card-header">-->
+                                <!--<h3 class="card-title">Add Library</h3>-->
+                                <!--<div class="card-options ">-->
+                                    <!--<a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>-->
+                                    <!--<a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<form class="card-body">-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Title <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<input type="text" class="form-control">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday Type  <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<select class="form-control input-height" name="type">-->
+                                            <!--<option value="">Select...</option>-->
+                                            <!--<option value="Category 1">Public Holiday</option>-->
+                                            <!--<option value="Category 2">Holiday By University</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday Start Date <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday End Date <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label">Holiday Details <span class="text-danger">*</span></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-md-3 col-form-label"></label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+                                        <!--<button type="submit" class="btn btn-outline-secondary">Cancel</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
-        <!-- Start main footer -->
+        <!-- Start assets footer -->
         <div class="section-body">
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            Copyright © 2019 <a href="https://themeforest.net/user/puffintheme/portfolio">PuffinTheme</a>.
-                        </div>
-                        <div class="col-md-6 col-sm-12 text-md-right">
-                            <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><a href="../doc/index.html">Documentation</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0)">FAQ</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0)" class="btn btn-outline-primary btn-sm">Buy Now</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <div th:insert="~{/university/import :: footer}"></div>
+            <!--<head th:insert="~{/university/import :: head}">-->
+
         </div>
     </div>    
 </div>
@@ -1290,6 +1109,6 @@
 
 <!-- Start Plugin Js -->
 
-<!-- Start project main js  and page js -->
+<!-- Start project assets js  and page js -->
 </body>
 </html>
