@@ -835,7 +835,7 @@
                                         <td>
                                             <!--<button type="button" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></button>-->
                                             <!--<button type="button" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></button>-->
-                                            <button id="deleteUser" th:onclick="'javascript:deleteOne(\''+${user.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="" data-type=""><i class="fa fa-trash-o text-danger"></i></button>
+                                            <button th:if="${user.status==1}" id="deleteUser" th:onclick="'javascript:deleteOne(\''+${user.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="" data-type=""><i class="fa fa-trash-o text-danger"></i></button>
                                         </td>
                                     </tr>
                                            <script>
@@ -911,7 +911,7 @@
 
                                             $.post(url,data,function (data) {
                                                 $("#username").val(data.username)
-                                                $("#password").val(data.password)
+                                                // $("#password").val(data.password)
                                                 $("#phone").val(data.phone)
                                                 $("#updateId").val(data.id)
                                             })
@@ -939,7 +939,7 @@
                                         </div>
                                        
                                         <div class="form-group row">
-                                            <label class="col-md-3 col-form-label">密码<span class="text-danger">*</span></label>
+                                            <label class="col-md-3 col-form-label">输入新密码<span class="text-danger">*</span></label>
                                             <div class="col-md-9">
                                                 <input id="password" name="password" type="text" class="form-control">
                                             </div>
@@ -952,7 +952,7 @@
                                         </div>
                                         
                                         <div class="form-group row">
-                                            <label class="col-md-3 col-form-label">设置角色 <span class="text-danger">*</span></label>
+                                            <label class="col-md-3 col-form-label" style="color: red">设置角色 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
 
                                                 <input  name="roles" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">

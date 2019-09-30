@@ -132,7 +132,7 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(updateUser,user);
         user.setId(updateUser.getId());
-
+        user.setPassword(PasswordUtil.encodePwd(updateUser.getPassword()));
         int i = userMapper.updateByPrimaryKeySelective(user);
         if(i!=0) {
             List<Integer> roles = updateUser.getRoles();
@@ -146,6 +146,7 @@ public class UserService {
             }
 
         }else {
+            log.error("更新用户错误:");
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
         }
 
@@ -172,7 +173,10 @@ public class UserService {
     }
 
     public boolean deleteUser(Integer id) {
-        int i = userMapper.deleteByPrimaryKey(id);
+        User user = new User();
+        user.setId(id);
+        user.setStatus(0);
+        int i = userMapper.updateByPrimaryKeySelective(user);
         if(i!=0){
             return true;
         }
