@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<head th:insert="~{/university/import :: head}">
+<div class="tab-pane" id="fix-course-datail-div">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">修改课程详情</h3>
+            <div class="card-options ">
+                <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+            </div>
+        </div>
+        <form class="card-body" action="/course/update" method="post">
+<!--            <div class="form-group row">-->
+<!--                <label class="col-md-3 col-form-label">课程名<span class="text-danger">*</span></label>-->
+<!--                <div class="col-md-7">-->
+<!--                    <select id="mId" class="form-control input-height" name="coursePlan">-->
+<!--                        <option value="">选择课程</option>-->
+<!--                        <option th:each="coursePlan : ${coursePlans}" th:value="${coursePlan.id}" th:value="${coursePlan.course.courseName}"></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+            <script>
+               /* $(document).ready(function () {
+                    $("#mId").change(function () {
+                        var mid= $("#mId").val();
+                        var  url = "/course/detail";
+                        var data={"mid":mid}
+                        $.post(url,data,function (data) {
+                            $("#newcourseNo").val(data.course.courseNo);
+                            $("#newnum").val(data.num);
+                            $("#newschoolTime").val(data.schoolTime);
+                        })
+                    })
+                })*/
+            </script>
+                <div class="form-group row">
+                    <input type="hidden" th:value="${coursePlanDTO.id}" name="coursePlanId">
+                    <label class="col-md-3 col-form-label">课程名称</label>
+                    <div class="col-md-7">
+                        <input th:value="${coursePlanDTO.course.courseName}" type="text" class="form-control" name="newCourseNname" id="newCourseNname">
+                    </div>
+                </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">课程编号</label>
+                <div class="col-md-7">
+                    <input th:value="${coursePlanDTO.course.courseNo}" type="text" class="form-control" name="newcourseNo" id="newcourseNo">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label"> 开课人数</label>
+                <div class="col-md-7">
+                    <input th:value="${coursePlanDTO.num}" type="number" class="form-control" name="newnum" id="newnum">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">开课时间</label>
+                <div class="col-md-7">
+                    <input  th:value="${coursePlanDTO.schoolTime}" class="form-control" name="newschoolTime" id="newschoolTime">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">备注</label>
+                <div class="col-md-7">
+                    <input th:value="${coursePlanDTO.mark}" type="text" class="form-control" name="newmark" id="newmark">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label"></label>
+                <div class="col-md-7">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                    <button type="submit" class="btn btn-outline-secondary">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

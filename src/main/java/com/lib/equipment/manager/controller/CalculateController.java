@@ -5,16 +5,12 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.ForecastDTO;
 import com.lib.equipment.manager.dto.ForecastTempDTO;
-import com.lib.equipment.manager.excelDate.MaterialExcel;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.CalculateMapper;
 import com.lib.equipment.manager.model.CoursePlan;
-import com.lib.equipment.manager.model.Material;
-import com.lib.equipment.manager.model.MaterialExample;
 import com.lib.equipment.manager.service.CourseMaterialService;
 import com.lib.equipment.manager.service.CoursePlanService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
@@ -91,7 +85,7 @@ public class CalculateController {
         }else {
             throw new CustomizeException(CustomizeErrorCode.Course_Plan_Not_Found);
         }
-        return "university/holiday";
+        return "university/forecast";
     }
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)

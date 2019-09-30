@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<title>:: 实验室器材 :: 出入库日志Courses</title>
+
+<!-- Bootstrap Core and vandor -->
+</head>
+<head th:insert="~{/university/import :: head}"></head>
+<body class="font-muli theme-cyan gradient">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+    </div>
+</div>
+
+<div id="main_content">
+    <!-- Start Main top header -->
+    <div th:insert="~{/university/import :: header_top}"></div>
+    <!-- Start Rightbar setting panel -->
+    <div th:insert="~{/university/import :: Rightbar}"></div>
+    <!-- Start Main leftbar navigation -->
+    <div th:insert="~{/university/import :: navigation}"></div>
+    <!-- Start project content area -->
+    <div class="page">
+        <!-- Start Page header -->
+        <div th:insert="~{/university/import :: page_top}"></div>
+        <!-- Start Page title and tab -->
+        <div class="section-body">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center ">
+                    <div class="header-action">
+                        <h1 class="page-title">库存日志</h1>
+                        <ol class="breadcrumb page-breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">实验室器材管理</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">库存日志</li>
+                        </ol>
+                    </div>
+                    <ul class="nav nav-tabs page-header-tab">
+                        <li class="nav-item"><a class="nav-link active" id="list-tab" data-toggle="tab" href="#list"><i class="fa fa-list-ul"></i> 出
+                    库日志</a></li>
+                        <li class="nav-item"><a class="nav-link" id="grid-tab" data-toggle="tab" href="#grid"><i class="fa fa-th"></i> 入
+                    库日志</a></li>
+                        <li class="nav-item"><a class="nav-link" id="addnew-tab" data-toggle="tab" href="#addnew"><i class="fa fa-plus"></i> 修改日志</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="section-body mt-4">
+            <div class="container-fluid">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="list" role="tabpanel">
+                        <div class="table-responsive" id="users">
+                                <div class="tab-pane active" id="Student-all">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="记录编号">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="出库人">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="器材名称">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="出库日期">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary btn-block" title="">搜索</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive card">
+                                        <table class="table table-hover table-vcenter table-striped mb-0 text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>记录编号</th>
+                                                    <th>出库人</th>
+                                                    <th>器材名称</th>
+                                                    <th>器材规格</th>
+                                                    <th>器材数量</th>
+                                                    <th>出 库日期</th>
+                                                    <th>备注</th>
+                                                    <th>删除</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody th:if="${instorage !=null}">
+                                                <tr th:each="outstorage,Status :${outstorages}">
+
+                                                    <td th:text="${Status.count}"></td>
+                                                    <td></td>
+                                                    <td th:text="${outstorage.material.name}"></td>
+                                                    <td th:text="${outstorage.material.specification}"></td>
+                                                    <td th:text="${outstorage.num}"></td>
+                                                    <td th:text="${outstorage.outTime}"></td>
+                                                    <td th:text="${outstorage.remark}"></td>
+                                                    <td>
+                                                        <button id="deleteOut" th:onclick="'javascript:deleteOut(\''+${outstorage.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="">
+                                                            <i class="fa fa-trash-o text-danger"></i></button></td>
+                                                </tr>
+                                                <script>
+                                                    function deleteOut(id) {
+                                                        if(confirm("是否删除")){
+                                                            var url = "/storagerecord/deleteOut";
+                                                            // var data={'id':id};
+                                                            var datatype={"dataType":"json"}
+                                                            $.ajax({
+                                                                type:"POST",
+                                                                url:url,
+                                                                contentType: 'application/json',
+                                                                data: JSON.stringify({
+                                                                    "id":id,
+
+                                                                }),
+                                                                success:function (data) {
+
+                                                                    if(data.code==1){
+                                                                        alert("删除成功")
+                                                                        window.location.href="/storagerecord/list"
+
+                                                                    }else {
+                                                                        alert("删除失败")
+                                                                    }
+                                                                },
+                                                                dataType:"json"
+                                                            })
+
+                                                            location.reload();
+                                                        }
+                                                    }
+                                                </script>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="grid" role="tabpanel">
+                          <div class="tab-pane active" id="Student-all">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="记录编号">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="入库人">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="器材名称">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="input-group">
+                                                        <input data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="入库日期">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary btn-block" title="">搜索</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive card">
+                                        <table class="table table-hover table-vcenter table-striped mb-0 text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>记录编号</th>
+                                                    <th>入库人</th>
+                                                    <th>器材名称</th>
+                                                    <th>器材规格</th>
+                                                    <th>器材数量</th>
+                                                    <th>入库日期</th>
+                                                    <th>备注</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody th:if="${instorages !=null}">
+                                            <tr th:each="instorage,Status :${instorages}">
+                                                <td th:text="${Status.count}"></td>
+                                                <td></td>
+                                                <td th:text="${instorage.material.name}"></td>
+                                                <td th:text="${instorage.material.specification}"></td>
+                                                <td th:text="${instorage.num}"></td>
+                                                <td th:text="${instorage.inTime}"></td>
+                                                <td th:text="${instorage.remark}"></td>
+                                                <td>
+                                                    <button id="delete" th:onclick="'javascript:deleteIn(\''+${instorage.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="">
+                                                        <i class="fa fa-trash-o text-danger"></i></button></td>
+                                            </tr>
+                                            <script>
+                                                function deleteIn(id) {
+                                                    if(confirm("是否删除")){
+                                                        var url = "/storagerecord/deleteIn";
+                                                        // var data={'id':id};
+                                                        var datatype={"dataType":"json"}
+                                                        $.ajax({
+                                                            type:"POST",
+                                                            url:url,
+                                                            contentType: 'application/json',
+                                                            data: JSON.stringify({
+                                                                "id":id,
+
+                                                            }),
+                                                            success:function (data) {
+
+                                                                if(data.code==1){
+                                                                    alert("删除成功")
+                                                                    window.location.href="/storagerecord/list#grid"
+
+                                                                }else {
+                                                                    alert("删除失败")
+                                                                }
+                                                            },
+                                                            dataType:"json"
+                                                        })
+
+                                                        location.reload();
+                                                    }
+                                                }
+                                            </script>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="tab-pane fade" id="addnew" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Enter Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <textarea type="text" class="form-control" rows="4">Enter your Address</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input type="file" class="dropify">
+                                    </div>
+                                    <div class="col-lg-12 mt-3">
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <button type="submit" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start assets footer -->
+        <div class="section-body">
+            <div th:insert="~{/university/import :: footer}"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Main project js, jQuery, Bootstrap -->
+
+<!-- Start Plugin Js -->
+<script src="../assets/bundles/sweetalert.bundle.js"></script>
+
+<!-- Start project assets js  and page js -->
+<script src="../../static/univer/js/page/dialogs.js"></script>
+<script>
+$(function() {
+    "use strict";
+
+    $('.dropify').dropify();
+
+    var drEvent = $('#dropify-event').dropify();
+    drEvent.on('dropify.beforeClear', function(event, element) {
+        return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+    });
+
+    drEvent.on('dropify.afterClear', function(event, element) {
+        alert('File deleted');
+    });
+
+    $('.dropify-fr').dropify({
+        messages: {
+            default: 'Glissez-déposez un fichier ici ou cliquez',
+            replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+            remove: 'Supprimer',
+            error: 'Désolé, le fichier trop volumineux'
+        }
+    });
+});
+</script>
+</body>
+</html>
