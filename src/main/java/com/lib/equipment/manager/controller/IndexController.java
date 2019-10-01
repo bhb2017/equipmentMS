@@ -61,7 +61,7 @@ public class IndexController {
             try {
                 subject.login(token);
 
-                request.getSession().setAttribute("user",user);
+                request.getSession().setAttribute("user",userDTO.getUsername());
                 return "university/index";
             }catch (Exception e){
                 log.error("msg",e.getMessage());
@@ -71,7 +71,7 @@ public class IndexController {
             }
         }else {
             model.addAttribute("msg","用户名或密码不能为空");
-            return "university/index";
+            return "university/login";
         }
 
 
