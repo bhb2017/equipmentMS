@@ -9,9 +9,9 @@
         
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3307/equipment"
+                        connectionURL="jdbc:mysql://localhost:3306/equipment"
                         userId="root"
-                        password="qq123321">
+                        password="bao19980624">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -35,7 +35,11 @@
         <!--<table tableName="material" schema=""></table>-->
         <!--<table tableName="out_storage" schema=""></table>-->
         <!--<table tableName="in_storage" schema=""></table>-->
-        <table tableName="storage" schema=""></table>
+
+        < table tableName="storage" schema=""></table>
+
+<!--        <table tableName="storage" schema=""></table>-->
+
         <!--<table tableName="course_matrial" schema=""></table>-->
         <!--<table tableName="course" schema=""></table>-->
         <!--<table tableName="course_plan" schema=""></table>-->
