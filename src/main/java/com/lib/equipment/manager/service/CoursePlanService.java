@@ -1,5 +1,6 @@
 package com.lib.equipment.manager.service;
 
+import com.lib.equipment.manager.dto.ShoolTimesDTO;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.CoursePlanMapper;
@@ -15,12 +16,14 @@ public class CoursePlanService {
     @Autowired
     private CoursePlanMapper coursePlanMapper;
 
-    public List<CoursePlan> selectAll() {
+    public List<ShoolTimesDTO> selectAll() {
         try {
             CoursePlanExample coursePlanExample = new CoursePlanExample();
             coursePlanExample.setOrderByClause("id desc");
-            List<CoursePlan> coursePlans = coursePlanMapper.selectByExample(coursePlanExample);
-            return coursePlans;
+
+//            List<CoursePlan> coursePlans = coursePlanMapper.selectByExample(coursePlanExample);
+            List<ShoolTimesDTO>shoolTimesDTOS= coursePlanMapper.selectShoolTime();
+            return shoolTimesDTOS;
         }catch (Exception e){
             throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
 

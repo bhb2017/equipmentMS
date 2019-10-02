@@ -5,12 +5,14 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.ForecastDTO;
 import com.lib.equipment.manager.dto.ForecastTempDTO;
+import com.lib.equipment.manager.dto.ShoolTimesDTO;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.CalculateMapper;
 import com.lib.equipment.manager.model.CoursePlan;
 import com.lib.equipment.manager.service.CourseMaterialService;
 import com.lib.equipment.manager.service.CoursePlanService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import java.util.List;
 
 
 @Controller
+@Slf4j
 @RequestMapping("/calculate")
 public class CalculateController {
     @Autowired
@@ -79,7 +82,7 @@ public class CalculateController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String index(Model model){
-        List<CoursePlan> coursePlans= coursePlanService.selectAll();
+        List<ShoolTimesDTO> coursePlans= coursePlanService.selectAll();
         if(coursePlans!=null&&coursePlans.size()!=0){
             model.addAttribute("schooltimes",coursePlans);
         }else {
@@ -93,7 +96,8 @@ public class CalculateController {
                           Model model, HttpServletRequest request){
 
         List<ForecastTempDTO> forecastTempDTOS = calculateMapper.selectByDate(schoolTime);
-        System.out.println(forecastTempDTOS);
+
+        log.info("forecastTempDTOS:{}",forecastTempDTOS);
         List<ForecastDTO>forecastDTOS =new ArrayList<>();
         for (ForecastTempDTO forecastTempDTO : forecastTempDTOS) {
             ForecastDTO forecastDTO = new ForecastDTO();
@@ -120,7 +124,7 @@ public class CalculateController {
 
             }
         }
-        System.out.println(forecastDTOS);
+
         request.getSession().setAttribute("forecastDTOS",forecastDTOS);
 //        model.addAttribute("",forecastDTOS);
         return "redirect:/calculate/list";

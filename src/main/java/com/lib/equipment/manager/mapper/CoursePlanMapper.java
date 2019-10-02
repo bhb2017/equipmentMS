@@ -1,5 +1,6 @@
 package com.lib.equipment.manager.mapper;
 
+import com.lib.equipment.manager.dto.ShoolTimesDTO;
 import com.lib.equipment.manager.model.CoursePlan;
 import com.lib.equipment.manager.model.CoursePlanExample;
 import java.util.List;
@@ -102,4 +103,7 @@ public interface CoursePlanMapper {
      * @mbg.generated Wed Sep 25 22:13:22 GMT+08:00 2019
      */
     int updateByPrimaryKey(CoursePlan record);
+
+    List<ShoolTimesDTO> selectShoolTime();
+
 }
