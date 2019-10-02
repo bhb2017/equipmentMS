@@ -173,7 +173,7 @@
                                         <div class="form-group">
                                             <select id="mId" class="form-control input-height" name="courseId">
                                                 <option value="">选择课程</option>
-                                                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
+                                                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}+'/'+${course.courseNo}"></option>
                                             </select>
                                         </div>
                                     </div>

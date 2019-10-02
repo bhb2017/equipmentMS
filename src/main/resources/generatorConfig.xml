@@ -36,7 +36,7 @@
         <!--<table tableName="out_storage" schema=""></table>-->
         <!--<table tableName="in_storage" schema=""></table>-->
 
-        < table tableName="storage" schema=""></table>
+        <table tableName="storage" schema=""></table>
 
 <!--        <table tableName="storage" schema=""></table>-->
 
