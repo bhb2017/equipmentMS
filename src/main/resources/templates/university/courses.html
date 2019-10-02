@@ -86,7 +86,7 @@
                                                 <tr >
                                                 <td class="w20"><i class="fa fa-calendar text-blue"></i></td>
                                                     <td class="tx-medium">开课人数</td>
-                                                    <td class="text-right" th:text="${courseplan.num}">60</td>
+                                                    <td class="text-right" th:text="${courseplan.num}"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fa fa-cc-visa text-danger"></i></td>
@@ -107,6 +107,7 @@
                                                 <td>
                                                     <button id="delete" th:onclick="'javascript:deleteOne(\''+${courseplan.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="delete" data-type="">
                                                         <i class="fa fa-trash-o text-danger"></i></button></td>
+                                                <td><i class="fa fa-edit"></i><a th:href="@{'/course/edit/'+${courseplan.id}}">编辑</a></td>
                                             </tr>
 
                                             <script>
@@ -158,7 +159,7 @@
                     </div>
 
                     <div class="tab-pane" id="Courses-add">
-                        <form class="card-body" action="/course/addCoursePlan" method="post">
+                        <form class="card-body" id="courseplanform" action="/course/addCoursePlan" method="post">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">添加开课计划</h3>
@@ -180,7 +181,7 @@
                                     
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input type="number" name="num" class="form-control" placeholder="开课人数 ">
+                                            <input type="text" name="num" class="form-control" placeholder="开课人数 ">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -239,7 +240,7 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body" action="/course/addCourse" method="post">
+                            <form id="courseform" class="card-body" action="/course/addCourse" method="post">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">课程名<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
@@ -249,7 +250,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">课程编号</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="coursePlan.course.courseNo">
+                                        <input type="text" class="form-control" name="courseNo">
                                     </div>
                                 </div>
                                
@@ -273,13 +274,13 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body" action="/course/updatecourse" method="post">
+                            <form id="updateCourseform" class="card-body" action="/course/updatecourse" method="post">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">课程名<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <select id="id" class="form-control input-height" name="id">
                                             <option value="">选择课程</option>
-                                            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
+                                            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}+'/'+${course.courseNo}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -335,5 +336,6 @@
 <!-- Start Plugin Js -->
 
 <!-- Start project assets js  and page js -->
+<script src="/univer/validateCourse.js"></script>
 </body>
 </html>

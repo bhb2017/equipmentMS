@@ -13,7 +13,7 @@ $('#userform').bootstrapValidator({
             message: '用户名验证失败',
             validators: {
                 notEmpty: {
-                    message: '器材名不能为空'
+                    message: '用户名不能为空'
                 },
                 stringLength: {
                     min: 3,
@@ -45,7 +45,7 @@ $('#userform').bootstrapValidator({
         phone:{
             validators: {
                 notEmpty: {
-                    message: '规格不能为空'
+                    message: '号码不能为空'
                 },
                 regexp: { //正则表达式
                     //*星号表示可以重复任意次，也就是可以有多个号码

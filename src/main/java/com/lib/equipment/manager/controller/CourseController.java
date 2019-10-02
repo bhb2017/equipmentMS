@@ -64,7 +64,7 @@ public class CourseController {
     }
 
     @PostMapping("/updatecourse")
-    public  String updatecourse(@Valid Course course ,UpdateCourse updateCourse, Model model){
+    public  String updatecourse(Course course ,UpdateCourse updateCourse, Model model){
         try{
             course = courseMapper.selectByPrimaryKey(course.getId());
             course.setCourseName(updateCourse.getNewcourseName());
@@ -80,7 +80,7 @@ public class CourseController {
     public String courseplanupdate(UpdateCoursePlan updateCoursePlan, Model model){
         try{
 
-            Course course = new Course();
+            Course course =new Course();
             Integer coursePlanId = updateCoursePlan.getCoursePlanId();
             CoursePlan coursePlan = coursePlanMapper.selectByPrimaryKey(coursePlanId);
             coursePlan.setSchoolTime(updateCoursePlan.getNewschoolTime());
@@ -94,6 +94,7 @@ public class CourseController {
             courseMapper.updateByPrimaryKey(course);
             return "redirect:/course/list";
         }catch (Exception e){
+            log.error("更新失败：{}",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
         }
     }
@@ -113,7 +114,7 @@ public class CourseController {
         coursePlanExample.setOrderByClause("id desc");
         List<CoursePlan> coursePlans =coursePlanMapper.selectByExample(coursePlanExample);
         List<CoursePlanDTO> coursePlanDTOS = new ArrayList<>();
-        log.info("coursePlans list:",coursePlans.toArray());
+        log.info("coursePlans list:{}",coursePlans.toArray());
         for(CoursePlan coursePlan : coursePlans){
             Course course = courseMapper.selectByPrimaryKey(coursePlan.getCourseId());
             CoursePlanDTO coursePlanDTO = new CoursePlanDTO();
@@ -152,6 +153,7 @@ public class CourseController {
             System.out.println("err");
             return "redirect:/course/list";
         }
+        System.out.println(coursePlan);
         if(coursePlan!=null){
             coursePlanMapper.insertSelective(coursePlan);
         }
@@ -165,11 +167,12 @@ public class CourseController {
             System.out.println("err");
             return "redirect:/course/list";
         }
+        System.out.println(course);
         if(course!=null){
             courseMapper.insertSelective(course);
         }
         list(model);
-        return "redirect:/university/courses";
+        return "redirect:/course/list";
     }
 
 

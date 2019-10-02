@@ -7,6 +7,7 @@ import com.lib.equipment.manager.mapper.InStorageMapper;
 import com.lib.equipment.manager.mapper.StorageMapper;
 import com.lib.equipment.manager.model.InStorage;
 import com.lib.equipment.manager.model.Storage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 @Service
 @Transactional
+@Slf4j
 public class StorageService {
     @Autowired
     private StorageMapper storageMapper;
@@ -37,6 +39,7 @@ public class StorageService {
 
             inStorageMapper.insert(inStorage);
         }catch (Exception e){
+            log.error("插入错误:{}",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
 
         }

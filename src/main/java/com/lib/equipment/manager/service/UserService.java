@@ -80,8 +80,8 @@ public class UserService {
             userData.setRoles(roles);
             userDataList.add(userData);
         }
-        log.info("userDataList",userDataList);
-        System.out.println(userDataList);
+        log.info("userDataList：{}",userDataList);
+
         return userDataList;
     }
 

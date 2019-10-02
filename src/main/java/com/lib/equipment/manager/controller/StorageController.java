@@ -66,11 +66,12 @@ public class StorageController {
             storage.setPlace(updateStorage.getNewplace());
             storage.setNum(updateStorage.getNewnum());
             storage.setMaterialId(updateStorage.getMaterialid());
-            log.info("storage:",storage);
+            log.info("storage:{}",storage);
             storageMapper.updateByPrimaryKeySelective(storage);
             list(model);
             return "university/storage";
         }catch (Exception e){
+            log.error("库存更新失败:{}",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
         }
     }
@@ -79,7 +80,9 @@ public class StorageController {
     public String storage(@ModelAttribute("storage") Storage storage,Model model){
         try{
             list(model);
+
         }catch (Exception e){
+            log.error("storagelist err:{}",e.getMessage());
             e.printStackTrace();
         }
         return "university/storage";
@@ -89,7 +92,7 @@ public class StorageController {
         storageExample.setOrderByClause("id desc");
         List<Storage> storageList = storageMapper.selectByExample(storageExample);
         List<StorageDTO> storages = new ArrayList<>();
-        log.info("storages list:",storages.toArray());
+        log.info("storages list:{}",storages.toArray());
         for (Storage storage : storageList) {
             Material material = materialMapper.selectByPrimaryKey(storage.getMaterialId());
             StorageDTO storageDTO = new StorageDTO();
