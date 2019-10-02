@@ -7,4 +7,6 @@ public class UpdateStorage {
     private Integer newnum;
     private String newplace;
     private Long materialid;
+    private String newschoolTime;
+    private String remark;
 }

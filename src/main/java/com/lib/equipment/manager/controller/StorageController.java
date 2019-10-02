@@ -61,15 +61,11 @@ public class StorageController {
     @PostMapping("/update")
     public  String storageupdate(UpdateStorage updateStorage, Model model){
         try{
-            Storage storage = new Storage();
-            storage.setId(updateStorage.getNewid());
-            storage.setPlace(updateStorage.getNewplace());
-            storage.setNum(updateStorage.getNewnum());
-            storage.setMaterialId(updateStorage.getMaterialid());
-            log.info("storage:{}",storage);
-            storageMapper.updateByPrimaryKeySelective(storage);
+
+            storageService.update(updateStorage);
+
             list(model);
-            return "university/storage";
+            return "redirect:/storage/list";
         }catch (Exception e){
             log.error("库存更新失败:{}",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
@@ -116,7 +112,7 @@ public class StorageController {
             criteria.andMaterialIdEqualTo(id);
             List<Storage> storages = storageMapper.selectByExample(storageExample);
 
-            if(storages!=null){
+            if(storages!=null&&storages.size()!=0){
                 mv.setViewName("university/storage");
                 return storages.get(0);
             }else{
@@ -141,6 +137,13 @@ public class StorageController {
         return "redirect:/storage/list";
     }
 
+    /**
+     * 作废
+     * @param storage
+     * @param model
+     * @param result
+     * @return
+     */
     @RequestMapping("/reduce")
     public String storageReduce(@Valid Storage storage, Model model, BindingResult result){
         if(result.hasErrors()){

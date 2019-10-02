@@ -64,6 +64,7 @@
                                             <th>器材规格</th>
                                             <th>数量</th>
                                             <th>存放地点</th>
+
                                             <th>编辑</th>
                                         </tr>
                                     </thead>
@@ -74,6 +75,7 @@
                                             <td th:text="${storage.material.specification}"></td>
                                             <td th:text="${storage.num}"></td>
                                             <td th:text="${storage.place}"></td>
+
                                             <td>
                                                 <button id="delete" th:onclick="'javascript:deleteOne(\''+${storage.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="">
                                                     <i class="fa fa-trash-o text-danger"></i></button></td>
@@ -131,7 +133,7 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <form action="/storage/add" method="post">
+                                    <form id="addstorageform" action="/storage/add" method="post">
                                         <div class="row clearfix">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
@@ -148,7 +150,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control" placeholder="数量 " name="num">
+                                                    <input type="text" class="form-control" placeholder="数量 " name="num">
                                                 </div>
                                             </div>
 
@@ -191,7 +193,7 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body" action="/storage/update" method="post">
+                            <form id="updatestorageform" class="card-body" action="/storage/update" method="post">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">器材名<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
@@ -243,15 +245,15 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">数量 <span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="number" class="form-control" placeholder="" name="newnum" id="newnum">
+                                        <input type="text" class="form-control" placeholder="" name="newnum" id="newnum">
                                     </div>
                                 </div>
-<!--                                <div class="form-group row">-->
-<!--                                    <label class="col-md-3 col-form-label">备注 <span class="text-danger">*</span></label>-->
-<!--                                    <div class="col-md-7">-->
-<!--                                        <textarea rows="4" class="form-control no-resize" placeholder="备注"></textarea>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">备注 <span class="text-danger">*</span></label>
+                                    <div class="col-md-7">
+                                        <textarea rows="4" name="remark" class="form-control no-resize" placeholder="备注"></textarea>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
@@ -274,6 +276,7 @@
 </div>
 
 
+<script src="/univer/validateStorage.js"></script>
 
 
 </body>
