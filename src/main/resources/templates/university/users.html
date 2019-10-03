@@ -10,7 +10,7 @@
 
     <!-- Core css -->
 </head>
-<head th:insert="~{/university/import :: head}">
+<head th:insert="~{university/import :: head}">
 </head>
 <body class="font-muli theme-cyan gradient">
 
@@ -22,7 +22,7 @@
 
 <div id="main_content">
     <!-- Start Main top header -->
-    <div th:insert="~{/university/import :: header_top}"></div>
+    <div th:insert="~{university/import :: header_top}"></div>
     <!-- Start Rightbar setting panel -->
 
     <!-- Start Theme panel do not add in project -->
@@ -543,13 +543,13 @@
         </div>
     </div>
     <!-- Start Main leftbar navigation -->
-    <div th:insert="~{/university/import :: navigation}"></div>
+    <div th:insert="~{university/import :: navigation}"></div>
 
     <!-- Start project content area -->
     <div class="page">
         <!-- Start Page header -->
 
-        <div th:insert="~{/university/import :: page_top}"></div>
+        <div th:insert="~{university/import :: page_top}"></div>
         <!-- Start Page title and tab -->
         <div class="section-body">
             <div class="container-fluid">
@@ -682,7 +682,7 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body">        
+                            <form id="selectForm" name="selectForm" class="card-body">
                                 
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">选择用户 <span class="text-danger">*</span></label>
@@ -730,7 +730,7 @@
                                             <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
                                             <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                         </div>
-                                        <form class="card-body" method="post" action="/user/update">
+                                        <form id="updateForm" name="updateForm" class="card-body" method="post" action="/user/update">
                                         <div class="form-group row">
                                             <input type="hidden" id="updateId" name="id">
                                             <label class="col-md-3 col-form-label">用户名 <span class="text-danger">*</span></label>
@@ -756,10 +756,11 @@
                                             <label class="col-md-3 col-form-label" style="color: red">设置角色 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
 
-                                                <input  name="roles" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
+                                                <input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
 
                                             </div>
                                         </div>
+
                                          <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
@@ -814,10 +815,19 @@
                                             </div>
                                         </div>
                                         
+                                        <!--<div class="form-group row">-->
+                                            <!--<label class="col-md-3 col-form-label">设置角色 <span class="text-danger">*</span></label>-->
+                                            <!--<div class="col-md-9">-->
+                                                <!--&lt;!&ndash;<input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">&ndash;&gt;-->
+                                                <!--<input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">-->
+
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="form-group row">
-                                            <label class="col-md-3 col-form-label">设置角色 <span class="text-danger">*</span></label>
+                                            <label class="col-md-3 col-form-label" style="color: red">设置角色 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <input  name="roles" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
+
+                                                <input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
 
                                             </div>
                                         </div>
@@ -845,7 +855,7 @@
         </div>
         <!-- Start assets footer -->
         <div class="section-body">
-            <div th:insert="~{/university/import :: footer}"></div>
+            <div th:insert="~{university/import :: footer}"></div>
 
         </div>
     </div>    
@@ -858,6 +868,7 @@
 
 <script src="/univer/validateUser.js"></script>
 <!-- Start project assets js  and page js -->
+<script src="/univer/validateUpdateUser.js"></script>
 
 </body>
 </html>

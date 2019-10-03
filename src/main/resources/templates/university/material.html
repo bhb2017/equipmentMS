@@ -9,7 +9,7 @@
 <title>:: 实验器材管理 :: 器材管理</title>
 
 <!-- Bootstrap Core and vandor -->
-<head th:insert="~{/university/import :: head}">
+<head th:insert="~{university/import :: head}">
 </head>
 <body class="font-muli theme-cyan gradient">
 
@@ -21,15 +21,15 @@
 
 <div id="main_content">
     <!-- Start Main top header -->
-    <div th:insert="~{/university/import :: header_top}"></div>
+    <div th:insert="~{university/import :: header_top}"></div>
     <!-- Start Rightbar setting panel -->
-    <div th:insert="~{/university/import :: Rightbar}"></div>
+    <div th:insert="~{university/import :: Rightbar}"></div>
     <!-- Start Main leftbar navigation -->
-    <div th:insert="~{/university/import :: navigation}"></div>
+    <div th:insert="~{university/import :: navigation}"></div>
     <!-- Start project content area -->
     <div class="page">
         <!-- Start Page header -->
-        <div th:insert="~{/university/import :: page_top}"></div>
+        <div th:insert="~{university/import :: page_top}"></div>
 
         <!-- Start Page title and tab -->
         <div class="section-body">
@@ -195,7 +195,7 @@
                                     <div class="col-md-7">
                                         <select id="mId" class="form-control input-height" name="sub">
                                             <option value="">选择器材.</option>
-                                            <option th:each="material : ${materials}" th:value="${material.id}" th:text="${material.name}+'/'+${material.specification}"></option>
+                                            <option th:if="${materials!=null}" th:each="material : ${materials}" th:value="${material.id}" th:text="${material.name}+'/'+${material.specification}"></option>
 
                                         </select>
                                     </div>
@@ -259,7 +259,7 @@
         </div>
         <!-- Start assets footer -->
         <div class="section-body">
-            <div th:insert="~{/university/import :: footer}"></div>
+            <div th:insert="~{university/import :: footer}"></div>
         </div>
     </div>    
 </div>

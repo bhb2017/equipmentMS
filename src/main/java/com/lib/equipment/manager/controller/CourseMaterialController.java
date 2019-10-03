@@ -18,11 +18,10 @@ import com.lib.equipment.manager.model.MaterialExample;
 import com.lib.equipment.manager.service.CourseMaterialService;
 import com.lib.equipment.manager.service.CourseService;
 import com.lib.equipment.manager.service.MaterialSevice;
-import com.lib.equipment.manager.utils.ExcelUtils;
-import com.sun.deploy.net.HttpResponse;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

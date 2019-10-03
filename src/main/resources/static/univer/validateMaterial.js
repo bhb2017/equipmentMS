@@ -1,5 +1,5 @@
 
-$('.materialform').bootstrapValidator({
+$('#materialform').bootstrapValidator({
     message: 'This value is not valid',
     // 配置校验图标
     feedbackIcons: {
@@ -10,7 +10,7 @@ $('.materialform').bootstrapValidator({
     // 配置校验字段   (给input设置 name 值)
     fields: {
         name: {
-            message: '用户名验证失败',
+            message: '器材名验证失败',
             validators: {
                 notEmpty: {
                     message: '器材名不能为空'
