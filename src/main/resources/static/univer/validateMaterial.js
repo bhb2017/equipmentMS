@@ -1,5 +1,5 @@
 
-$('#materialform').bootstrapValidator({
+$('form').bootstrapValidator({
     message: 'This value is not valid',
     // 配置校验图标
     feedbackIcons: {
@@ -98,4 +98,4 @@ $('#materialform').bootstrapValidator({
 
     }
 });
-$('#addForm').data("bootstrapValidator").resetForm(true)
+// $('#addForm').data("bootstrapValidator").resetForm(true)
