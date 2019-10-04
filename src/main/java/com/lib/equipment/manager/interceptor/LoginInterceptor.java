@@ -12,7 +12,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
         String user = (String) request.getSession().getAttribute("user");
-        if(uri.indexOf("/login")>0){
+        if(uri.indexOf("/login")>0||uri.indexOf("assets")>0){
             return true;
         }
         ModelAndView mv = new ModelAndView();
