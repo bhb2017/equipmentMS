@@ -48,7 +48,7 @@ public class IndexController {
     public String login(UserDTO userDTO, Model model,
                         HttpServletRequest request,
                         Integer rememberme){
-        log.info("user:",userDTO);
+        log.info("user:{}",userDTO);
         if((userDTO.getUsername()!=null&&!"".equals(userDTO.getUsername()))&&(userDTO.getPassword()!=null&&!"".equals(userDTO.getPassword()))){
             String newPassword= PasswordUtil.encodePwd(userDTO.getPassword());
             UsernamePasswordToken token = new UsernamePasswordToken(userDTO.getUsername(),newPassword);

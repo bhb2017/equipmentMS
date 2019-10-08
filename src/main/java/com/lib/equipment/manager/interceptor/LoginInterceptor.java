@@ -11,6 +11,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
+        System.out.println("11");
         String user = (String) request.getSession().getAttribute("user");
         if(uri.indexOf("/login")>0||uri.indexOf("assets")>0){
             return true;

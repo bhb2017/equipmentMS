@@ -715,6 +715,8 @@
                                                 // $("#password").val(data.password)
                                                 $("#phone").val(data.phone)
                                                 $("#updateId").val(data.id)
+                                                // alert(data.roles.id)
+                                                $("#selectRole").find("option:contains('"+data.roles.id+"')").attr("selected", true);
                                             })
                                         })
 
@@ -756,8 +758,12 @@
                                             <label class="col-md-3 col-form-label" style="color: red">设置角色 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
 
-                                                <input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
+                                                <!--<input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">-->
+                                                <select id="selectRole" class="form-control input-height" name="role">
+                                                    <!--<option value="">选择角色.</option>-->
+                                                    <option th:if="${roles!=null}" th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}+'/'+${role.description}"></option>
 
+                                                </select>
                                             </div>
                                         </div>
 
@@ -827,8 +833,12 @@
                                             <label class="col-md-3 col-form-label" style="color: red">设置角色 <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
 
-                                                <input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">
+                                                <!--<input  name="roles[]" class="form-control input-height" type="checkbox" th:each="role: ${roles}" th:value="${role.id}" th:text="${role.roleName}+' /' +${role.description}">-->
+                                                <select id="role" class="form-control input-height" name="role">
+                                                    <!--<option value="">选择角色.</option>-->
+                                                    <option th:if="${roles!=null}" th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}+'/'+${role.description}"></option>
 
+                                                </select>
                                             </div>
                                         </div>
                                          <div class="form-group row">

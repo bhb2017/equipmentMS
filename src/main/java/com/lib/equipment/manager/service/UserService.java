@@ -6,6 +6,7 @@ import com.lib.equipment.manager.dto.UserData;
 import com.lib.equipment.manager.dto.UserSearch;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
+import com.lib.equipment.manager.form.AddUser;
 import com.lib.equipment.manager.mapper.*;
 import com.lib.equipment.manager.model.*;
 import com.lib.equipment.manager.utils.PasswordUtil;
@@ -77,7 +78,7 @@ public class UserService {
                 Role role = roleMapper.selectByPrimaryKey(userRole.getRoleId());
                 roles.add(role);
             }
-            userData.setRoles(roles);
+            userData.setRoles(roles.get(0));
             userDataList.add(userData);
         }
         log.info("userDataList：{}",userDataList);
@@ -135,15 +136,15 @@ public class UserService {
         user.setPassword(PasswordUtil.encodePwd(updateUser.getPassword()));
         int i = userMapper.updateByPrimaryKeySelective(user);
         if(i!=0) {
-            List<Integer> roles = updateUser.getRoles();
+            Integer role= updateUser.getRole();
             UserRoleExample userRoleExample = new UserRoleExample();
             UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
             criteria.andUserIdEqualTo(user.getId());
             int i1 = userRoleMapper.deleteByExample(userRoleExample);
-
-            for (Integer rid : roles) {
-                userRoleMapper.insertSelective(new UserRole(user.getId(), rid));
-            }
+            userRoleMapper.insertSelective(new UserRole(user.getId(),role));
+//            for (Integer rid : roles) {
+//                userRoleMapper.insertSelective(new UserRole(user.getId(), rid));
+//            }
 
         }else {
             log.error("更新用户错误:");
@@ -152,7 +153,7 @@ public class UserService {
 
     }
 
-    public void insertUserAndRole(UpdateUser addUser) {
+    public void insertUserAndRole(AddUser addUser) {
         User user = new User();
         BeanUtils.copyProperties(addUser,user);
         user.setPassword(PasswordUtil.encodePwd(user.getPassword()));
@@ -163,11 +164,12 @@ public class UserService {
         List<User> users = userMapper.selectByExample(userExample);
         if(users!=null){
             User u = users.get(0);
-            if(addUser.getRoles()!=null){
-                for (Integer role : addUser.getRoles()) {
-
-                    userRoleMapper.insertSelective(new UserRole(u.getId(),role));
-                }
+            if(addUser.getRole()!=null){
+                userRoleMapper.insertSelective(new UserRole(u.getId(),addUser.getRole()));
+//                for (Integer role : addUser.getRoles()) {
+//                    System.out.println(role);
+//                    userRoleMapper.insertSelective(new UserRole(u.getId(),role));
+//                }
             }
         }
     }

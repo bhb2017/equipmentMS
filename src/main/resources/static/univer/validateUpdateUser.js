@@ -57,12 +57,15 @@ $('#updateForm').bootstrapValidator({
             }
         },
 
-        'roles[]':{
+        'role':{
             validators: {
                 choice: {
                     min:1,
                     max:2,
                     message:'请选择1~2项'
+                },
+                notEmpty: {
+                    message: '号码不能为空'
                 },
 
             }

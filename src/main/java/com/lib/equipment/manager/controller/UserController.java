@@ -6,6 +6,7 @@ import com.lib.equipment.manager.dto.UserData;
 import com.lib.equipment.manager.dto.UserSearch;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
+import com.lib.equipment.manager.form.AddUser;
 import com.lib.equipment.manager.model.Role;
 import com.lib.equipment.manager.model.User;
 import com.lib.equipment.manager.service.UserService;
@@ -57,8 +58,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public String addUser(@Valid UpdateUser addUser, BindingResult result){
-        if(result.hasErrors()){
+    public String addUser(@Valid AddUser addUser, BindingResult result){
+          if(result.hasErrors()){
             System.out.println(result.getFieldError().getDefaultMessage());
         }
         addUser.setStatus(1);
@@ -103,7 +104,7 @@ public class UserController {
                 userData.setUsername(user.getUsername());
                 userData.setPhone(user.getPhone());
                 userData.setPassword(user.getPassword());
-                userData.setRoles(roles);
+                userData.setRoles(roles.get(0));
                 return userData;
             }catch (Exception e){
                 throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);

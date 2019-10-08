@@ -58,7 +58,7 @@ $('#userform').bootstrapValidator({
             }
         },
 
-        'roles[]':{
+        'roles':{
             validators: {
                 choice: {
                     min:1,
