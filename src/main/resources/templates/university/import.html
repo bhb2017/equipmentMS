@@ -71,13 +71,14 @@
                     <ul class="metismenu">
                         <li class="active"><a href="/home"><i class="fa fa-dashboard"></i><span>导航</span></a></li>
                         <!--<li><a href="professors.html"><i class="fa fa-black-tie"></i><span>Professors</span></a></li>-->
-                        <li><a href="/coursematerial/list"><i class="fa fa-user-circle-o"></i><span>课程器材管理</span></a></li>
 
                         <li shiro:hasRole="admin"><a  href="/user/list"><i class="fa fa-users"></i><span>用户</span></a></li>
                         <li><a href="/storage/list"><i class="fa fa-users"></i><span>库存管理</span></a></li>
 
                         <li><a href="/course/list"><i class="fa fa-graduation-cap"></i><span>课程管理</span></a></li>
                         <li shiro:hasRole="admin"><a shiro:hasRole="admin" href="/material/list"><i class="fa fa-book"></i><span>器材管理</span></a></li>
+                        <li><a href="/coursematerial/list"><i class="fa fa-user-circle-o"></i><span>课程器材管理</span></a></li>
+
                         <li><a href="/calculate/list"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
                         <li class="g_heading">其他</li>
                         <!--<li><a href="events.html"><i class="fa fa-calendar"></i><span>Calender</span></a></li>-->

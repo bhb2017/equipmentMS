@@ -165,8 +165,8 @@ public class MaterialController  {
             material.setRemark(updateMaterial.getNewremark());
             log.info("material:",material);
             materialMapper.updateByPrimaryKeySelective(material);
-            list(model);
-            return "university/material";
+
+            return "redirect:/material/list";
         }catch (Exception e){
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
 
@@ -251,7 +251,7 @@ public class MaterialController  {
               materialMapper.insertSelective(material);
           }
           list(model);
-          return "university/material";
+          return "redirect:/material/list";
 
     }
 }

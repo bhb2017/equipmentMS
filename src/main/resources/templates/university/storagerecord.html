@@ -46,7 +46,7 @@
                     库日志</a></li>
                         <li class="nav-item"><a class="nav-link" id="grid-tab" data-toggle="tab" href="#grid"><i class="fa fa-th"></i> 入
                     库日志</a></li>
-                        <li class="nav-item"><a class="nav-link" id="addnew-tab" data-toggle="tab" href="#addnew"><i class="fa fa-plus"></i> 修改日志</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" id="addnew-tab" data-toggle="tab" href="#addnew"><i class="fa fa-plus"></i> 修改日志</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>记录编号</th>
-                                                    <th>出库人</th>
+                                                    <!--<th>出库人</th>-->
                                                     <th>器材名称</th>
                                                     <th>器材规格</th>
                                                     <th>器材数量</th>
@@ -104,7 +104,7 @@
                                                 <tr th:each="outstorage,Status :${outstorages}">
 
                                                     <td th:text="${Status.count}"></td>
-                                                    <td></td>
+                                                    <!--<td></td>-->
                                                     <td th:text="${outstorage.material.name}"></td>
                                                     <td th:text="${outstorage.material.specification}"></td>
                                                     <td th:text="${outstorage.num}"></td>
@@ -187,7 +187,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>记录编号</th>
-                                                    <th>入库人</th>
+                                                    <!--<th>入库人</th>-->
                                                     <th>器材名称</th>
                                                     <th>器材规格</th>
                                                     <th>器材数量</th>
@@ -199,7 +199,7 @@
                                             <tbody th:if="${instorages !=null}">
                                             <tr th:each="instorage,Status :${instorages}">
                                                 <td th:text="${Status.count}"></td>
-                                                <td></td>
+                                                <!--<td></td>-->
                                                 <td th:text="${instorage.material.name}"></td>
                                                 <td th:text="${instorage.material.specification}"></td>
                                                 <td th:text="${instorage.num}"></td>

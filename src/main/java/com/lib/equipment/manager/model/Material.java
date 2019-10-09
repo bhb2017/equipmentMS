@@ -16,7 +16,7 @@ public class Material {
     @NotNull(message = "不能为空")
     @DecimalMin("0.001")
     private Float price;
-    @Digits(integer = 4, fraction = 2)
+    @Digits(integer = 4, fraction = 4)
     private Float rate;
     private String remark;
 
