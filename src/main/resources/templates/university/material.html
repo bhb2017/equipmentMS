@@ -58,6 +58,7 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -82,11 +83,7 @@
                                             </tr>
                                             <div><a href="/material/download">导出Excel</a>
                                             </div>
-                                            <!--<div><form method="post" enctype="multipart/form-data" id="form" action="/material/upload">
-                                                <input type="file" name="filename"/>
-                                                <input type="submit" value="提交上传"/>
-                                            </form>
-                                            </div>-->
+
 
 
                                             <script>
@@ -120,8 +117,10 @@
                                         </tbody>
                                     </table>
                                 </div>
+
                             </div>
                         </div>
+
                     </div>
                     <div class="tab-pane" id="Library-add">
                         <div class="card">
@@ -178,6 +177,14 @@
                                 </div>
                             </form>
 
+                        </div>
+                        <div class="card">
+                            <div>
+                                <form action="/material/upload" method="post" enctype="multipart/form-data" >
+                                    上传器材信息：<input type="file" name="filename"/>
+                                    <input type="submit" value="提交上传" class="btn btn-primary" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="Library-add-Boot">

@@ -1,6 +1,11 @@
 package com.lib.equipment.manager.controller;
 
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.*;
+import com.lib.equipment.manager.excelDate.CoursePlanUploadExcel;
+import com.lib.equipment.manager.excelDate.MaterialExcel;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.CourseMapper;
@@ -9,7 +14,9 @@ import com.lib.equipment.manager.model.Course;
 import com.lib.equipment.manager.model.CoursePlan;
 import com.lib.equipment.manager.model.CoursePlanExample;
 import com.lib.equipment.manager.model.Material;
+import com.lib.equipment.manager.service.CoursePlanService;
 import com.lib.equipment.manager.service.CourseService;
+import com.lib.equipment.manager.utils.ExcelListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +24,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +42,32 @@ public class CourseController {
     private CoursePlanMapper coursePlanMapper;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private CoursePlanService coursePlanService;
 
+    @RequestMapping("/upload")
+    public String upload(@RequestParam("filename") MultipartFile file) throws Exception{
+        InputStream inputStream = file.getInputStream();
+        ExcelListener listener = new ExcelListener();
+        ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLSX,null,listener);
+        excelReader.read(new Sheet(1,2, CoursePlanUploadExcel.class));
+        List<Object> datas = listener.getDatas();
+        List<CoursePlanUploadExcel>coursePlanUploadExcels= new ArrayList<>();
+
+        try {
+            for (Object data : datas) {
+
+                coursePlanService.insertData(data);
+            }
+        }catch (Exception e){
+            log.error("excel上传失败：{}",e.getMessage());
+            throw new CustomizeException(CustomizeErrorCode.Excel_Upload_Fail);
+
+        }
+
+
+        return "redirect:/course/list";
+    }
 
     @RequestMapping("/edit/{id}")
     public String editView(@PathVariable("id") Integer id,Model model){

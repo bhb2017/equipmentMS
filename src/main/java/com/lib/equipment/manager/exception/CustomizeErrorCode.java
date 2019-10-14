@@ -10,6 +10,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     Material_Not_Found(2008,"没有器材，请先添加器材"),
     Course_Plan_Not_Found(2009,"开课计划不存在"),
     Select_Error(2010,"查询失败"),
+    Excel_Upload_Fail(2011,"excel上传失败"),
     ;
     @Override
     public String getMessage() {
