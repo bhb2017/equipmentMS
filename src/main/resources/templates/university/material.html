@@ -184,8 +184,15 @@
                                     上传器材信息：<input type="file" name="filename"/>
                                     <input type="submit" value="提交上传" class="btn btn-primary" />
                                 </form>
+                                <button onclick="downexcel()"></button>
                             </div>
                         </div>
+                        <script>
+                            function downexcel() {
+                                window.open("/excel/material.xlsx")
+
+                            }
+                        </script>
                     </div>
                     <div class="tab-pane" id="Library-add-Boot">
                         <div class="card">

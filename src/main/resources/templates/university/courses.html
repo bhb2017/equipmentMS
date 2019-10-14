@@ -212,9 +212,14 @@
                                         上传开课计划：<input type="file" name="filename"/>
                                         <input type="submit" value="提交上传" class="btn btn-primary"/>
                                     </form>
+                                    <button class="btn btn-primary" id="downmodel" onclick="downexcel()">模板下载</button>
                                 </div>
                             </div>
-
+                            <script>
+                               function downexcel() {
+                                   window.open("/excel/courplan.xlsx")
+                               }
+                            </script>
 
                         <!-- <div class="card">
                             <div class="card-header">
