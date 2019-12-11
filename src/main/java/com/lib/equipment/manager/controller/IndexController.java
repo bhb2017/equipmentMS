@@ -64,7 +64,7 @@ public class IndexController {
                 request.getSession().setAttribute("user",userDTO.getUsername());
                 return "university/index";
             }catch (Exception e){
-                log.error("msg",e.getMessage());
+                log.error("msg{}",e.getMessage()+"用户名或密码错误");
                 model.addAttribute("msg","用户名或密码错误");
                 return "university/login";
 
