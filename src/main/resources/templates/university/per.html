@@ -60,9 +60,32 @@
                     <div class="tab-pane active" id="Student-all">
                         <div class="card">
                             <div class="card-body">
-                                <a href="/coursematerial/exportExcel">导出Excel</a>
+                                <a href="/coursematerial/exportExcel" class="btn btn-primary">导出Excel</a>
+                                <div>
+                                    <form action="/course/upload" method="post" enctype="multipart/form-data" style="margin-top: 10px;
+">                                      <label>
+                                        课程:
+                                        <select id="courrseid" class="form-control input-height" name="course">
+                                            <option value="">选择课程.</option>
+                                            <option th:if="courses!=null" th:each="course :${courses}" th:value="${course.id}" th:text="${course.courseName}+'/'+${course.courseNo}"></option>
+                                        </select>
+                                    </label>
+                                        课程所需器材明细：<input type="file" name="filename"/>
+                                        <input type="submit" value="提交上传" class="btn btn-primary"/>
+                                    </form>
+                                    <button class="btn btn-primary" id="downmodel" onclick="downexcel()">模板下载</button>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="card" style="height: 52px;margin-top: 20px;">
+
+                        </div>
+                        <script>
+                            function downexcel() {
+                                window.open("/excel/courplan.xlsx")
+                            }
+                        </script>
                         <div class="table-responsive card">
                             <div id="app">
 

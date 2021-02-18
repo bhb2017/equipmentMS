@@ -6,9 +6,12 @@ import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.CourseMapper;
 import com.lib.equipment.manager.mapper.CourseMatrialMapper;
+import com.lib.equipment.manager.mapper.CoursePlanMapper;
 import com.lib.equipment.manager.mapper.MaterialMapper;
+import com.lib.equipment.manager.model.CourseExample;
 import com.lib.equipment.manager.model.CourseMatrial;
 import com.lib.equipment.manager.model.CourseMatrialExample;
+import com.lib.equipment.manager.model.CoursePlan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class CourseMaterialService {
     private CourseMapper courseMapper;
     @Autowired
     private MaterialMapper materialMapper;
+    @Autowired
+    private CoursePlanMapper coursePlanMapper;
 
     public void insertDetail(CourseMaterialDTO courseMaterialDTO) throws ParseException {
         CourseMatrial courseMatrial = new CourseMatrial();
@@ -119,6 +124,20 @@ public class CourseMaterialService {
             throw new CustomizeException(CustomizeErrorCode.SYS_ERROR);
 
         }
+
+    }
+
+    public void add(CoursePlan coursePlan, Integer[] materIds) {
+        for (Integer materId : materIds) {
+            coursePlanMapper.insert(coursePlan);
+            Integer coursePlanId = coursePlan.getId();
+            CourseMatrial courseMatrial = new CourseMatrial();
+            courseMatrial.setMaterialId(Long.valueOf(materId));
+            courseMatrial.setCourseId(coursePlan.getCourseId());
+            courseMatrialMapper.insert(courseMatrial);
+        }
+
+
 
     }
 }

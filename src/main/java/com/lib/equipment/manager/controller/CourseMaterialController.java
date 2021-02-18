@@ -11,10 +11,7 @@ import com.lib.equipment.manager.dto.StatusMsg;
 import com.lib.equipment.manager.excelDate.CourseMaterialExcel;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
-import com.lib.equipment.manager.model.Course;
-import com.lib.equipment.manager.model.CourseMatrial;
-import com.lib.equipment.manager.model.Material;
-import com.lib.equipment.manager.model.MaterialExample;
+import com.lib.equipment.manager.model.*;
 import com.lib.equipment.manager.service.CourseMaterialService;
 import com.lib.equipment.manager.service.CourseService;
 import com.lib.equipment.manager.service.MaterialSevice;
@@ -43,6 +40,22 @@ public class CourseMaterialController {
     private MaterialSevice materialSevice;
     @Autowired
     private CourseMaterialService courseMaterialService;
+
+    @ResponseBody
+    @RequestMapping("/addCoursePlanAndMaterials")
+    public ResultDTO addCoursePlanAndMaterials(@RequestBody CoursePlan coursePlan,Integer[] checkitemIds){
+        try {
+            if(checkitemIds.length!=0&&checkitemIds!=null){
+                courseMaterialService.add(coursePlan,checkitemIds);
+                return ResultDTO.okOf();
+            }else {
+                return ResultDTO.errorOf(400,"未设置器材信息!!");
+            }
+
+        }catch (Exception e){
+            return ResultDTO.errorOf(400,"添加失败!!");
+        }
+    }
 
 
     @RequestMapping("/exportExcel")

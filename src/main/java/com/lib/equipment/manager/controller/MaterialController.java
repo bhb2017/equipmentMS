@@ -48,6 +48,17 @@ public class MaterialController  {
     @Autowired
     private MaterialSevice materialSevice;
 
+    @RequestMapping("/getAllMaterialAPI")
+    @ResponseBody
+    public ResultDTO getAllMaterialAPI(){
+        try {
+            List<Material> materialList = materialSevice.selectAllMaterial();
+            return ResultDTO.okOf(materialList);
+        }catch (Exception e){
+            return ResultDTO.errorOf(400,"获取失败");
+        }
+    }
+
 
     @RequestMapping("/upload")
     public String upload(@RequestParam("filename") MultipartFile file) throws Exception{
