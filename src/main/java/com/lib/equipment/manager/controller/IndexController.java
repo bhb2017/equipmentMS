@@ -53,7 +53,7 @@ public class IndexController {
             String newPassword= PasswordUtil.encodePwd(userDTO.getPassword());
             UsernamePasswordToken token = new UsernamePasswordToken(userDTO.getUsername(),newPassword);
             Subject subject = SecurityUtils.getSubject();
-            String user= (String) subject.getPrincipal();
+            User user= (User) subject.getPrincipal();
             if(rememberme!=null&&rememberme==1){
                 token.setRememberMe(true);
 

@@ -1,9 +1,6 @@
 package com.lib.equipment.manager.controller;
 
-import com.lib.equipment.manager.dto.StatusMsg;
-import com.lib.equipment.manager.dto.UpdateUser;
-import com.lib.equipment.manager.dto.UserData;
-import com.lib.equipment.manager.dto.UserSearch;
+import com.lib.equipment.manager.dto.*;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.form.AddUser;
@@ -11,6 +8,7 @@ import com.lib.equipment.manager.model.Role;
 import com.lib.equipment.manager.model.User;
 import com.lib.equipment.manager.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +19,34 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @ResponseBody
+    @RequestMapping("/getUser")
+    public ResultDTO getUser(){
+        try {
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            user.setPassword("");
+            Map map = new HashMap();
+            map.put("user",user);
+            List<Role>roles= userService.selectAllRole();
+            map.put("roles",roles);
+            List<Role> roleList = userService.selectRoleByUser(user);
+            map.put("myRole",roleList.get(0));
+            return ResultDTO.okOf(map);
+        }catch (Exception e){
+            return ResultDTO.errorOf(400,"获取失败");
+        }
+
+    }
 
     /**
      * 删除
@@ -73,18 +92,31 @@ public class UserController {
      * @param updateUser
      * @return
      */
-    @PostMapping("/update")
-    public String update(UpdateUser updateUser){
+    @PostMapping("/updateProfile")
+    @ResponseBody
+    public ResultDTO updateProfile(@RequestBody UpdateUser updateUser){
         try {
 
             userService.updateUserInfo(updateUser);
+            return ResultDTO.okOf();
         }catch (Exception e){
-            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+//            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+            return ResultDTO.errorOf(400,"error");
         }
 
+    }
+    @PostMapping("/update")
+    public String update( UpdateUser updateUser){
+        try {
+
+            userService.updateUserInfo(updateUser);
+
+        }catch (Exception e){
+            throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
+
+        }
         return "redirect:/user/list";
     }
-
     /**
      * 与material/detail
      * 方法一样
