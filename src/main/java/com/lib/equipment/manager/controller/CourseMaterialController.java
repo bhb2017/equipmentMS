@@ -42,6 +42,35 @@ public class CourseMaterialController {
     private CourseMaterialService courseMaterialService;
 
     @ResponseBody
+    @RequestMapping("/handleUpdateInfo")
+    public ResultDTO handleUpdateInfo(@RequestBody CourseMaterialResDTO courseMaterialResDTO){
+        try {
+            courseMaterialService.updateInfo(courseMaterialResDTO);
+            return ResultDTO.okOf();
+        }catch (Exception e){
+            return ResultDTO.errorOf(400,"更新失败");
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/getOneById")
+    public ResultDTO getOneById(Long id){
+        CourseMatrial courseMatrial = courseMaterialService.selectById(id);
+        Integer courseId = courseMatrial.getCourseId();
+        Course course= courseService.selectById(courseId);
+        Long materialId = courseMatrial.getMaterialId();
+        Material material= materialSevice.selectById(materialId);
+        CourseMaterialResDTO courseMaterialResDTO = new CourseMaterialResDTO();
+        BeanUtils.copyProperties(course,courseMaterialResDTO);
+        BeanUtils.copyProperties(material,courseMaterialResDTO);
+        courseMaterialResDTO.setMaterialName(material.getName());
+        courseMaterialResDTO.setPer(courseMatrial.getPer());
+        courseMaterialResDTO.setId(id);
+        return ResultDTO.okOf(courseMaterialResDTO);
+    }
+
+    @ResponseBody
     @RequestMapping("/addCoursePlanAndMaterials")
     public ResultDTO addCoursePlanAndMaterials(@RequestBody CoursePlan coursePlan,Integer[] checkitemIds){
         try {

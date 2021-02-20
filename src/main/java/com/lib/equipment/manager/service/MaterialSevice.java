@@ -53,4 +53,9 @@ public class MaterialSevice {
 
         }
     }
+
+    public Material selectById(Long materialId) {
+
+        return materialMapper.selectByPrimaryKey(materialId);
+    }
 }

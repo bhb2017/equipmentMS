@@ -8,10 +8,7 @@ import com.lib.equipment.manager.mapper.CourseMapper;
 import com.lib.equipment.manager.mapper.CourseMatrialMapper;
 import com.lib.equipment.manager.mapper.CoursePlanMapper;
 import com.lib.equipment.manager.mapper.MaterialMapper;
-import com.lib.equipment.manager.model.CourseExample;
-import com.lib.equipment.manager.model.CourseMatrial;
-import com.lib.equipment.manager.model.CourseMatrialExample;
-import com.lib.equipment.manager.model.CoursePlan;
+import com.lib.equipment.manager.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +135,25 @@ public class CourseMaterialService {
         }
 
 
+
+    }
+
+    public void updateInfo(CourseMaterialResDTO courseMaterialResDTO) {
+        Long id = courseMaterialResDTO.getId();
+        CourseMatrial courseMatrial = courseMatrialMapper.selectByPrimaryKey(id);
+        Integer courseId = courseMatrial.getCourseId();
+        Course course = courseMapper.selectByPrimaryKey(courseId);
+        BeanUtils.copyProperties(courseMaterialResDTO,course);
+        courseMapper.updateByPrimaryKey(course);
+
+        Long materialId = courseMatrial.getMaterialId();
+        Material material = materialMapper.selectByPrimaryKey(materialId);
+        BeanUtils.copyProperties(courseMaterialResDTO,material);
+        material.setName(courseMaterialResDTO.getMaterialName());
+        materialMapper.updateByPrimaryKey(material);
+
+        courseMatrial.setPer(courseMaterialResDTO.getPer());
+        courseMatrialMapper.updateByPrimaryKey(courseMatrial);
 
     }
 }

@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 <html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
 
@@ -58,34 +59,8 @@
             <div class="container-fluid">
                 <div class="tab-content">
                     <div class="tab-pane active" id="Student-all">
-                        <div class="card">
-                            <div class="card-body">
-                                <a href="/coursematerial/exportExcel" class="btn btn-primary">导出Excel</a>
-                                <div>
-                                    <form action="/course/upload" method="post" enctype="multipart/form-data" style="margin-top: 10px;
-">                                      <label>
-                                        课程:
-                                        <select id="courrseid" class="form-control input-height" name="course">
-                                            <option value="">选择课程.</option>
-                                            <option th:if="courses!=null" th:each="course :${courses}" th:value="${course.id}" th:text="${course.courseName}+'/'+${course.courseNo}"></option>
-                                        </select>
-                                    </label>
-                                        课程所需器材明细：<input type="file" name="filename"/>
-                                        <input type="submit" value="提交上传" class="btn btn-primary"/>
-                                    </form>
-                                    <button class="btn btn-primary" id="downmodel" onclick="downexcel()">模板下载</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="card" style="height: 52px;margin-top: 20px;">
 
-                        </div>
-                        <script>
-                            function downexcel() {
-                                window.open("/excel/courplan.xlsx")
-                            }
-                        </script>
                         <div class="table-responsive card">
                             <div id="app">
 
@@ -163,7 +138,7 @@
 
 
                                 </div>
-
+                                <div id="app2">
                                 <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
                                     <thead>
                                     <!--th:each="suser :${sUsers}-->
@@ -181,14 +156,160 @@
                                         <th th:text="${d.per}"></th>
 
                                         <td>
-                                        <button id="delete" th:onclick="'javascript:deleteOne(\''+${d.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type=""><i class="fa fa-trash-o text-danger"></i></button>
+                                        <button id="delete" th:onclick="'javascript:deleteOne(\''+${d.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type=""><i class="fa fa-trash-o text-danger"></i> 删除</button>
+                                        <button id="edit" @click="handleGetOne($event)"  th:value="${d.id}" @model="itemId"   type="button" class="btn btn-icon btn-sm js-sweetalert" title="Edit" data-type=""><i  class="fa fa-pencil fa-fw"></i> 编辑</button>
+                                        <!--<button id="edit" th:onclick="'javascript:deleteOne(\''+${d.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type=""><i class="fa fa-pencil fa-fw"></i> 编辑</button>-->
 
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                                <!-- 新增标签弹层 -->
+                                <div class="add-form">
+                                    <el-dialog title="修改信息" :visible.sync="dialogFormVisible">
+                                        <form id="updateForm" name="updateForm" class="card-body" method="post" action="/user/update">
+                                            <div class="form-group row">
+                                                <input type="hidden" id="updateId" name="id">
+                                                <label class="col-md-3 col-form-label">课程名 <span class="text-danger">*</span></label>
+                                                <div class="col-md-9">
+                                                    <input name="courseName" id="courseName" type="text" v-model="formData.courseName" class="form-control" placeholder="输入课程名">
+                                                </div>
+                                            </div>
 
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">课程编号<span class="text-danger">*</span></label>
+                                                <div class="col-md-9">
+                                                    <input v-model="formData.courseNo" id="courseNo" name="courseNo" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label" >器材名</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" v-model="formData.materialName" class="form-control" id="materialName" name="materialName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label" >器材规格</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" v-model="formData.specification" class="form-control" id="specification" name="specification">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label" >数量</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" v-model="formData.per" class="form-control" id="" name="per">
+                                                </div>
+                                            </div>
+
+
+
+                                            <!--<div class="form-group row">-->
+                                            <!--<label class="col-md-3 col-form-label"></label>-->
+                                            <!--<div class="col-md-7">-->
+                                            <!--<button type="submit" id="updateU" class="btn btn-primary">提交</button>-->
+                                            <!--&lt;!&ndash;<button type="submit" class="btn btn-outline-secondary">取消</button>&ndash;&gt;-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+
+                                        </form>
+                                        <!---->
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogFormVisible = false">取消</el-button>
+                                            <el-button type="primary" @click="handleUpdateInfo()">确定</el-button>
+                                        </div>
+                                    </el-dialog>
+                                </div>
+                                </div>
+                            </div>
+                            <script>
+                                var vue = new Vue({
+                                    el: '#app2',
+                                    data:{
+                                        activeName:'first',//添加/编辑窗口Tab标签名称
+                                        pagination: {//分页相关属性
+                                            currentPage: 1,
+                                            pageSize:10,
+                                            total:100,
+                                            queryString:null,
+                                        },
+
+                                        user:{
+                                            username:'',
+                                            password:'',
+                                            phone:'',
+                                        },
+                                        itemId:'',
+                                        roles:{},
+                                        selected:'',
+
+                                        dataList: [],//列表数据
+                                        formData: {},//表单数据
+                                        tableData:[],//新增和编辑表单中对应的检查项列表数据
+                                        checkitemIds:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+                                        checkitemPer:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+                                        dialogFormVisible: false,//控制添加窗口显示/隐藏
+                                        dialogFormVisible4Edit:false//控制编辑窗口显示/隐藏
+                                    },
+                                    created() {
+
+
+                                    },
+                                    methods: {
+
+                                        //添加
+                                        handleUpdateInfo () {
+
+
+                                            axios.post("/coursematerial/handleUpdateInfo",this.formData).then((res)=>{
+                                                this.dialogFormVisible=false;
+                                                if(res.data.code==200){
+                                                    //操作成功
+                                                    this.$message({
+                                                        type:'success',
+                                                        message:res.data.message
+                                                    });
+                                                }else if(res.data.code==401||res.data.code==400){
+                                                    //操作失败
+                                                    this.$message.error("没有权限");
+                                                }
+                                            }).finally(()=>{
+                                                window.location.href="/coursematerial/list"
+                                            })
+
+                                        },
+
+                                        // 重置表单
+                                        resetForm() {
+                                            this.formData={};
+                                        },
+                                        // 弹出添加窗口
+                                        handleGetOne(evnet) {
+                                            this.itemId= event.currentTarget.getAttribute("value")
+                                            this.resetForm();
+                                            this.dialogFormVisible=true;
+                                            this.activeName = 'first';//
+                                            this.checkitemIds=[];
+                                            axios.get("/coursematerial/getOneById?id="+this.itemId).then((res)=>{
+                                                if(res.data.code==200){
+                                                    console.log(res.data.data)
+                                                    this.formData=res.data.data
+
+
+
+                                                }else{
+                                                    this.$message.error(res.data.message);
+                                                }
+                                            })
+
+                                        },
+
+
+                                        // 删除
+                                        handleDelete(row) {
+                                        }
+                                    }
+                                })
+                            </script>
                                 <script>
                                 function deleteOne(id) {
                                     if(confirm("是否删除")){

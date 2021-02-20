@@ -26,4 +26,9 @@ public class CourseService {
         }
 
     }
+
+    public Course selectById(Integer courseId) {
+        Course course = courseMapper.selectByPrimaryKey(courseId);
+        return course;
+    }
 }
