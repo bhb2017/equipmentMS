@@ -1,6 +1,9 @@
 package com.lib.equipment.manager.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.lib.equipment.manager.realm.MyRealm;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
@@ -12,6 +15,7 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -25,12 +29,14 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setUnauthorizedUrl("/nuauth.html");
         //拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/register", "anon");
+        filterChainDefinitionMap.put("/user/getUser", "perms[/user/getUser]");
         filterChainDefinitionMap.put("/user/*", "perms[/user/*]");
         filterChainDefinitionMap.put("/material/*", "perms[/material/*]");
         filterChainDefinitionMap.put("/calculate/*", "perms[/calculate/*]");
@@ -51,22 +57,47 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-    @Bean
-    public Realm myShiroRealm() {
-        MyRealm myShiroRealm = new MyRealm();
-        return myShiroRealm;
+    //配置核心安全事务管理器
+    @Bean(name="securityManager")
+    public SecurityManager securityManager(@Qualifier("authRealm") MyRealm authRealm) {
+        System.err.println("--------------shiro已经加载----------------");
+        DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
+        manager.setRealm(authRealm);
+        return manager;
+    }
+    //配置自定义的权限登录器
+    @Bean(name="authRealm")
+    public MyRealm authRealm(@Qualifier("credentialsMatcher") CredentialsMatcher matcher) {
+        MyRealm authRealm=new MyRealm();
+        authRealm.setCredentialsMatcher(matcher);
+        return authRealm;
+    }
+    //配置自定义的密码比较器
+    @Bean(name="credentialsMatcher")
+    public CredentialsMatcher credentialsMatcher() {
+        return new MyCredentialsMatcher();
     }
     @Bean
-    public SecurityManager securityManager() {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm());
-        securityManager.setRememberMeManager(rememberMeManager());
-        return securityManager;
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
+        return new LifecycleBeanPostProcessor();
     }
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
+        DefaultAdvisorAutoProxyCreator creator=new DefaultAdvisorAutoProxyCreator();
+        creator.setProxyTargetClass(true);
+        return creator;
+    }
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager manager) {
+        AuthorizationAttributeSourceAdvisor advisor=new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(manager);
+        return advisor;
+    }
+
     @Bean
     public SimpleCookie rememberMeCookie(){
         SimpleCookie simpleCookie = new SimpleCookie("rememberme");
-        simpleCookie.setMaxAge(30*60*60);
+        simpleCookie.setMaxAge(2592000);//30天
         return simpleCookie;
     }
 
@@ -74,44 +105,16 @@ public class ShiroConfig {
     public CookieRememberMeManager rememberMeManager(){
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
+        cookieRememberMeManager.setCipherKey(Base64.decode("6ZmI6I2j5Y+R5aSn5ZOlAA=="));
         return cookieRememberMeManager;
     }
-
-    /**
-     * 记住密码 相关操作
-     * @return
-     */
+    //用于thymeleaf模板使用shiro标签
     @Bean
-    public FormAuthenticationFilter formAuthenticationFilter() {
-        FormAuthenticationFilter formAuthenticationFilter = new FormAuthenticationFilter();
-        formAuthenticationFilter.setRememberMeParam("rememberme");
-        return formAuthenticationFilter;
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
     }
 
-    @Bean(name="lifecycleBeanPostProcessor")
-    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
-    /**
-     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
-     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
-     *
-     * @return
-     */
-    @Bean
-    @DependsOn({"lifecycleBeanPostProcessor"})
-    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        advisorAutoProxyCreator.setProxyTargetClass(true);
-        return advisorAutoProxyCreator;
-    }
 
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
-        return authorizationAttributeSourceAdvisor;
-    }
 
 
 

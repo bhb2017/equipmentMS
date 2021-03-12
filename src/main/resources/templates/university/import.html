@@ -99,11 +99,11 @@
                         <li shiro:hasRole="admin"><a shiro:hasRole="admin" href="/material/list"><i class="fa fa-book"></i><span>器材管理</span></a></li>
                         <li><a href="/coursematerial/list"><i class="fa fa-user-circle-o"></i><span>课程器材管理</span></a></li>
 
-                        <li><a href="/calculate/list"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
-                        <li class="g_heading">其他</li>
+                        <li><a href="/calculate/list" shiro:hasRole="admin"><i class="fa fa-bullhorn"></i><span>器材预测</span></a></li>
+                        <li class="g_heading" shiro:hasRole="admin">其他</li>
                         <!--<li><a href="events.html"><i class="fa fa-calendar"></i><span>Calender</span></a></li>-->
                         <!--<li><a href="app-chat.html"><i class="fa fa-comments-o"></i><span>Chat App</span></a></li>-->
-                        <li><a href="/storagerecord/list"><i class="fa fa-address-book"></i><span>库存日志</span></a></li>
+                        <li><a href="/storagerecord/list" shiro:hasRole="admin"><i class="fa fa-address-book"></i><span>库存日志</span></a></li>
                         <!--<li><a href="app-filemanager.html"><i class="fa fa-folder"></i><span>FileManager</span></a></li>-->
                         <!--<li><a href="our-centres.html"><i class="fa fa-map"></i><span>OurCentres</span></a></li>-->
                         <!--<li><a href="gallery.html"><i class="fa fa-camera-retro"></i><span>Gallery</span></a></li>-->
@@ -207,7 +207,7 @@
                                         <form id="updateForm" name="updateForm" class="card-body" method="post" action="/user/update">
                                             <div class="form-group row">
                                                 <input type="hidden" id="updateId" name="id">
-                                                <label class="col-md-3 col-form-label">用户名 <span class="text-danger">*</span></label>
+                                                <label  class="col-md-3 col-form-label">用户名 <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
                                                     <input name="username" id="username" type="text" v-model="user.username" class="form-control" placeholder="输入真实姓名">
                                                 </div>
