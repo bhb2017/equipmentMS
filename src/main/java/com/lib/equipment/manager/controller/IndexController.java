@@ -48,7 +48,7 @@ public class IndexController {
     public String login(UserDTO userDTO, Model model,
                         HttpServletRequest request,
                         Integer rememberme){
-        log.info("user:",userDTO);
+        log.info("user:{}",userDTO);
         if((userDTO.getUsername()!=null&&!"".equals(userDTO.getUsername()))&&(userDTO.getPassword()!=null&&!"".equals(userDTO.getPassword()))){
             String newPassword= PasswordUtil.encodePwd(userDTO.getPassword());
             UsernamePasswordToken token = new UsernamePasswordToken(userDTO.getUsername(),newPassword);
@@ -61,17 +61,17 @@ public class IndexController {
             try {
                 subject.login(token);
 
-                request.getSession().setAttribute("user",user);
+                request.getSession().setAttribute("user",userDTO.getUsername());
                 return "university/index";
             }catch (Exception e){
-                log.error("msg",e.getMessage());
+                log.error("msg{}",e.getMessage()+"用户名或密码错误");
                 model.addAttribute("msg","用户名或密码错误");
                 return "university/login";
 
             }
         }else {
             model.addAttribute("msg","用户名或密码不能为空");
-            return "university/index";
+            return "university/login";
         }
 
 

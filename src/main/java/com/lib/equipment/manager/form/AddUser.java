@@ -1,14 +1,14 @@
-package com.lib.equipment.manager.dto;
+package com.lib.equipment.manager.form;
 
-import com.lib.equipment.manager.model.Role;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.List;
-
 @Data
-public class UpdateUser {
+public class AddUser {
+
     private Integer id;
     @NotNull
     @Size(min = 2,max = 30)
@@ -21,4 +21,6 @@ public class UpdateUser {
     private String phone;
     private Integer status;
     private Integer role;
+
+
 }

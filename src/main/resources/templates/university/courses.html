@@ -13,7 +13,7 @@
 
 
 </head>
-<head th:insert="~{/university/import :: head}">
+<head th:insert="~{university/import :: head}">
 </head>
 <style type="text/css">
     div.card{
@@ -32,17 +32,17 @@
 
 <div id="main_content">
     <!-- Start Main top header -->
-    <div th:insert="~{/university/import :: header_top}"></div>
+    <div th:insert="~{university/import :: header_top}"></div>
 
     <!-- Start Rightbar setting panel -->
-    <div th:insert="~{/university/import :: Rightbar}"></div>
+    <div th:insert="~{university/import :: Rightbar}"></div>
     <!-- Start Main leftbar navigation -->
-    <div th:insert="~{/university/import :: navigation}"></div>
+    <div th:insert="~{university/import :: navigation}"></div>
     <!-- Start project content area -->
     <div class="page">
         <!-- Start Page header -->
-        <div th:insert="~{/university/import :: page_top}"></div>
-        <!-- Start Page title and tab -->
+        <div th:insert="~{university/import :: page_top}"></div>
+        <!-- Start Page titRightbarle and tab -->
         <div class="section-body">
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center ">
@@ -86,7 +86,7 @@
                                                 <tr >
                                                 <td class="w20"><i class="fa fa-calendar text-blue"></i></td>
                                                     <td class="tx-medium">开课人数</td>
-                                                    <td class="text-right" th:text="${courseplan.num}">60</td>
+                                                    <td class="text-right" th:text="${courseplan.num}"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fa fa-cc-visa text-danger"></i></td>
@@ -107,6 +107,7 @@
                                                 <td>
                                                     <button id="delete" th:onclick="'javascript:deleteOne(\''+${courseplan.id}+'\')'" type="button" class="btn btn-icon btn-sm js-sweetalert" title="delete" data-type="">
                                                         <i class="fa fa-trash-o text-danger"></i></button></td>
+                                                <td><i class="fa fa-edit"></i><a th:href="@{'/course/edit/'+${courseplan.id}}">编辑</a></td>
                                             </tr>
 
                                             <script>
@@ -153,12 +154,13 @@
                                     <div class="card-footer">
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="tab-pane" id="Courses-add">
-                        <form class="card-body" action="/course/addCoursePlan" method="post">
+                        <form class="card-body" id="courseplanform" action="/course/addCoursePlan" method="post">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">添加开课计划</h3>
@@ -173,14 +175,14 @@
                                         <div class="form-group">
                                             <select id="mId" class="form-control input-height" name="courseId">
                                                 <option value="">选择课程</option>
-                                                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
+                                                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}+'/'+${course.courseNo}"></option>
                                             </select>
                                         </div>
                                     </div>
                                     
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input type="number" name="num" class="form-control" placeholder="开课人数 ">
+                                            <input type="text" name="num" class="form-control" placeholder="开课人数 ">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -200,7 +202,24 @@
                                 </div>
                             </div>
                         </div>
+
                         </form>
+
+                            <div class="card" style="height: 52px;margin-top: 20px;">
+                                <div>
+                                    <form action="/course/upload" method="post" enctype="multipart/form-data" style="margin-top: 10px;
+">
+                                        上传开课计划：<input type="file" name="filename"/>
+                                        <input type="submit" value="提交上传" class="btn btn-primary"/>
+                                    </form>
+                                    <button class="btn btn-primary" id="downmodel" onclick="downexcel()">模板下载</button>
+                                </div>
+                            </div>
+                            <script>
+                               function downexcel() {
+                                   window.open("/excel/courplan.xlsx")
+                               }
+                            </script>
 
                         <!-- <div class="card">
                             <div class="card-header">
@@ -239,7 +258,7 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body" action="/course/addCourse" method="post">
+                            <form id="courseform" class="card-body" action="/course/addCourse" method="post">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">课程名<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
@@ -249,7 +268,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">课程编号</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="coursePlan.course.courseNo">
+                                        <input type="text" class="form-control" name="courseNo">
                                     </div>
                                 </div>
                                
@@ -273,13 +292,13 @@
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
-                            <form class="card-body" action="/course/updatecourse" method="post">
+                            <form id="updateCourseform" class="card-body" action="/course/updatecourse" method="post">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">课程名<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <select id="id" class="form-control input-height" name="id">
                                             <option value="">选择课程</option>
-                                            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
+                                            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}+'/'+${course.courseNo}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -321,11 +340,12 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
         <!-- Start assets footer -->
         <div class="section-body">
-            <div th:insert="~{/university/import :: footer}"></div>
+            <div th:insert="~{university/import :: footer}"></div>
         </div>
     </div>    
 </div>
@@ -335,5 +355,6 @@
 <!-- Start Plugin Js -->
 
 <!-- Start project assets js  and page js -->
+<script src="/univer/validateCourse.js"></script>
 </body>
 </html>

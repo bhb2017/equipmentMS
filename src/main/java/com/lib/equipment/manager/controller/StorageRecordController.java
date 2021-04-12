@@ -1,9 +1,6 @@
 package com.lib.equipment.manager.controller;
 
-import com.lib.equipment.manager.dto.InStorageDTO;
-import com.lib.equipment.manager.dto.OutStorageDTO;
-import com.lib.equipment.manager.dto.ResultDTO;
-import com.lib.equipment.manager.dto.StatusMsg;
+import com.lib.equipment.manager.dto.*;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.mapper.InStorageMapper;
 import com.lib.equipment.manager.mapper.MaterialMapper;
@@ -71,11 +68,11 @@ public class StorageRecordController {
         InStorageExample inStorageExample= new InStorageExample();
         inStorageExample.setOrderByClause("id desc");
         List<InStorage> inStorageList = inStorageMapper.selectByExample(inStorageExample);
-        List<InStorageDTO> inStorageS = new ArrayList<>();
+        List<RecordInStorageDTO> inStorageS = new ArrayList<>();
         log.info("instorages list:",inStorageS.toArray());
         for (InStorage inStorage: inStorageList){
             Material material = materialMapper.selectByPrimaryKey(inStorage.getMaterialId());
-            InStorageDTO inStorageDTO = new InStorageDTO();
+            RecordInStorageDTO inStorageDTO = new RecordInStorageDTO();
             BeanUtils.copyProperties(inStorage,inStorageDTO);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dateString = formatter.format(inStorage.getInTime());

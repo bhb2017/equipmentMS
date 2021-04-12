@@ -1,19 +1,15 @@
 package com.lib.equipment.manager.dto;
 
 import com.lib.equipment.manager.model.Material;
-import com.lib.equipment.manager.model.User;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class InStorageDTO {
-
+public class RecordInStorageDTO {
     private Long id;
     private String inTime;
     private String remark;
     private Integer num;
-    private Long materialId;
+    private Material material;
     private String place;
     private String user;
 }

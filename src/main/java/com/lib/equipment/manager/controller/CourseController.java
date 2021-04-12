@@ -1,6 +1,11 @@
 package com.lib.equipment.manager.controller;
 
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lib.equipment.manager.dto.*;
+import com.lib.equipment.manager.excelDate.CoursePlanUploadExcel;
+import com.lib.equipment.manager.excelDate.MaterialExcel;
 import com.lib.equipment.manager.exception.CustomizeErrorCode;
 import com.lib.equipment.manager.exception.CustomizeException;
 import com.lib.equipment.manager.mapper.CourseMapper;
@@ -9,7 +14,9 @@ import com.lib.equipment.manager.model.Course;
 import com.lib.equipment.manager.model.CoursePlan;
 import com.lib.equipment.manager.model.CoursePlanExample;
 import com.lib.equipment.manager.model.Material;
+import com.lib.equipment.manager.service.CoursePlanService;
 import com.lib.equipment.manager.service.CourseService;
+import com.lib.equipment.manager.utils.ExcelListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +24,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +43,73 @@ public class CourseController {
     private CoursePlanMapper coursePlanMapper;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private CoursePlanService coursePlanService;
 
+    @RequestMapping(value = "/modelDownload",method = RequestMethod.GET)
+    public String modelDownload(HttpServletResponse response) throws UnsupportedEncodingException {
+        String filename="courplan.xlsx";
+        String filePath = "C:\\Users\\cxq" ;
+        File file = new File(filePath + "/" + filename);
+        if(file.exists()){ //判断文件父目录是否存在
+            response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            // response.setContentType("application/force-download");
+            response.setHeader("Content-Disposition", "attachment;fileName=" +   java.net.URLEncoder.encode(filename,"UTF-8"));
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null; //文件输入流
+            BufferedInputStream bis = null;
+
+            OutputStream os = null; //输出流
+            try {
+                os = response.getOutputStream();
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                int i = bis.read(buffer);
+                while(i != -1){
+                    os.write(buffer);
+                    i = bis.read(buffer);
+                }
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("----------file download---" + filename);
+            try {
+                bis.close();
+                fis.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping("/upload")
+    public String upload(@RequestParam("filename") MultipartFile file) throws Exception{
+        InputStream inputStream = file.getInputStream();
+        ExcelListener listener = new ExcelListener();
+        ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLSX,null,listener);
+        excelReader.read(new Sheet(1,2, CoursePlanUploadExcel.class));
+        List<Object> datas = listener.getDatas();
+        List<CoursePlanUploadExcel>coursePlanUploadExcels= new ArrayList<>();
+
+        try {
+            for (Object data : datas) {
+
+                coursePlanService.insertData(data);
+            }
+        }catch (Exception e){
+            log.error("excel上传失败：{}",e.getMessage());
+            throw new CustomizeException(CustomizeErrorCode.Excel_Upload_Fail);
+
+        }
+
+
+        return "redirect:/course/list";
+    }
 
     @RequestMapping("/edit/{id}")
     public String editView(@PathVariable("id") Integer id,Model model){
@@ -64,7 +140,7 @@ public class CourseController {
     }
 
     @PostMapping("/updatecourse")
-    public  String updatecourse(@Valid Course course ,UpdateCourse updateCourse, Model model){
+    public  String updatecourse(Course course ,UpdateCourse updateCourse, Model model){
         try{
             course = courseMapper.selectByPrimaryKey(course.getId());
             course.setCourseName(updateCourse.getNewcourseName());
@@ -80,7 +156,7 @@ public class CourseController {
     public String courseplanupdate(UpdateCoursePlan updateCoursePlan, Model model){
         try{
 
-            Course course = new Course();
+            Course course =new Course();
             Integer coursePlanId = updateCoursePlan.getCoursePlanId();
             CoursePlan coursePlan = coursePlanMapper.selectByPrimaryKey(coursePlanId);
             coursePlan.setSchoolTime(updateCoursePlan.getNewschoolTime());
@@ -94,6 +170,7 @@ public class CourseController {
             courseMapper.updateByPrimaryKey(course);
             return "redirect:/course/list";
         }catch (Exception e){
+            log.error("更新失败：{}",e.getMessage());
             throw new CustomizeException(CustomizeErrorCode.Object_Not_Found);
         }
     }
@@ -113,7 +190,7 @@ public class CourseController {
         coursePlanExample.setOrderByClause("id desc");
         List<CoursePlan> coursePlans =coursePlanMapper.selectByExample(coursePlanExample);
         List<CoursePlanDTO> coursePlanDTOS = new ArrayList<>();
-        log.info("coursePlans list:",coursePlans.toArray());
+        log.info("coursePlans list:{}",coursePlans.toArray());
         for(CoursePlan coursePlan : coursePlans){
             Course course = courseMapper.selectByPrimaryKey(coursePlan.getCourseId());
             CoursePlanDTO coursePlanDTO = new CoursePlanDTO();
@@ -152,6 +229,7 @@ public class CourseController {
             System.out.println("err");
             return "redirect:/course/list";
         }
+        System.out.println(coursePlan);
         if(coursePlan!=null){
             coursePlanMapper.insertSelective(coursePlan);
         }
@@ -165,11 +243,12 @@ public class CourseController {
             System.out.println("err");
             return "redirect:/course/list";
         }
+        System.out.println(course);
         if(course!=null){
             courseMapper.insertSelective(course);
         }
         list(model);
-        return "redirect:/university/courses";
+        return "redirect:/course/list";
     }
 
 

@@ -302,4 +302,7 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectShoolTime" resultType="com.lib.equipment.manager.dto.ShoolTimesDTO">
+    SELECT DISTINCT school_time from course_plan
+  </select>
 </mapper>

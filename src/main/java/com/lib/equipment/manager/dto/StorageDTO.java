@@ -10,6 +10,15 @@ public class StorageDTO {
 
     private Material material;
 
+    @Override
+    public String toString() {
+        return "StorageDTO{" +
+                "id=" + id +
+                ", material=" + material +
+                ", num=" + num +
+                ", place='" + place + '\'' +
+                '}';
+    }
 
     private Integer num;
 

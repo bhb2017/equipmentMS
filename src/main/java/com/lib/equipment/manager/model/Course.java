@@ -1,5 +1,8 @@
 package com.lib.equipment.manager.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Course {
     /**
      *
@@ -17,6 +20,7 @@ public class Course {
      *
      * @mbg.generated Thu Sep 19 20:02:21 CST 2019
      */
+    @NotBlank(message = "不能为空")
     private String courseName;
 
     /**
@@ -26,6 +30,7 @@ public class Course {
      *
      * @mbg.generated Thu Sep 19 20:02:21 CST 2019
      */
+    @NotBlank(message = "不能为空")
     private String courseNo;
 
     /**
@@ -50,6 +55,15 @@ public class Course {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", courseNo='" + courseNo + '\'' +
+                '}';
     }
 
     /**
@@ -86,6 +100,14 @@ public class Course {
      */
     public String getCourseNo() {
         return courseNo;
+    }
+
+    public Course() {
+    }
+
+    public Course( String courseName, String courseNo) {
+        this.courseName = courseName;
+        this.courseNo = courseNo;
     }
 
     /**

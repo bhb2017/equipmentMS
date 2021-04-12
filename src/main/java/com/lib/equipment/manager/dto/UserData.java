@@ -12,5 +12,5 @@ public class UserData {
     private String password;
     private String phone;
     private Integer status;
-    private List<Role> roles;
+    private Role roles;
 }

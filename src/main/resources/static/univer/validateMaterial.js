@@ -1,5 +1,5 @@
 
-$('.materialform').bootstrapValidator({
+$('form').bootstrapValidator({
     message: 'This value is not valid',
     // 配置校验图标
     feedbackIcons: {
@@ -10,7 +10,7 @@ $('.materialform').bootstrapValidator({
     // 配置校验字段   (给input设置 name 值)
     fields: {
         name: {
-            message: '用户名验证失败',
+            message: '器材名验证失败',
             validators: {
                 notEmpty: {
                     message: '器材名不能为空'
@@ -42,7 +42,8 @@ $('.materialform').bootstrapValidator({
                     //*星号表示可以重复任意次，也就是可以有多个号码
                     // (13|15|18)\d{9}$ 最后一个用来匹配没有分号的号码
                     // 最后一个号码不能有分号
-                    regexp: /^((([^0][0-9]+|0)\.([0-9]{1,2}))$)|^(([1-9]+)\.([0-9]{1,2})$)/,
+                    regexp: /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/,
+
                     //以13,15,18开头的手机号,共11位，如果多个手机号中间用英文的；（分号）分开
                     message: '单价格式不正确'
                 },
@@ -58,7 +59,7 @@ $('.materialform').bootstrapValidator({
                     //*星号表示可以重复任意次，也就是可以有多个号码
                     // (13|15|18)\d{9}$ 最后一个用来匹配没有分号的号码
                     // 最后一个号码不能有分号
-                    regexp: /^((([^0][0-9]+|0)\.([0-9]{1,2}))$)|^(([1-9]+)\.([0-9]{1,2})$)/,
+                    regexp: /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/,
                     //以13,15,18开头的手机号,共11位，如果多个手机号中间用英文的；（分号）分开
                     message: '单价格式不正确'
                 },
@@ -73,7 +74,7 @@ $('.materialform').bootstrapValidator({
                 regexp: { //正则表达式
                     // 身份证号码为15位或者18位，15位时全为数字，
                     // 18位前17位为数字，最后一位是校验位，可能为数字或字符X
-                    regexp: /^((([^0][0-9]+|0)\.([0-9]{1,2}))$)|^(([1-9]+)\.([0-9]{1,2})$)/,
+                    regexp: /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/,
 
                     message: '损耗率格式不正确'
                 },
@@ -88,7 +89,7 @@ $('.materialform').bootstrapValidator({
                 regexp: { //正则表达式
                     // 身份证号码为15位或者18位，15位时全为数字，
                     // 18位前17位为数字，最后一位是校验位，可能为数字或字符X
-                    regexp: /^((([^0][0-9]+|0)\.([0-9]{1,2}))$)|^(([1-9]+)\.([0-9]{1,2})$)/,
+                    regexp: /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/,
 
                     message: '损耗率格式不正确'
                 },
@@ -97,4 +98,4 @@ $('.materialform').bootstrapValidator({
 
     }
 });
-$('#addForm').data("bootstrapValidator").resetForm(true)
+// $('#addForm').data("bootstrapValidator").resetForm(true)
