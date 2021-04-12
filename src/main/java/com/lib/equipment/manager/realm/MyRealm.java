@@ -18,15 +18,15 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String)principals.getPrimaryPrincipal();
+        User user = (User) principals.getPrimaryPrincipal();
 //        Users user = userService.findByUserName(username);
 //        user.setLocked(true);   //登录成功后锁定用户
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
         //根据用户名查找对应的角色集合
-        authorizationInfo.setRoles(usersService.findRoles(username));
+        authorizationInfo.setRoles(usersService.findRoles(user.getUsername()));
         //根据用户名查找对应的资源集合
-        authorizationInfo.setStringPermissions(usersService.findPermissions(username));
+        authorizationInfo.setStringPermissions(usersService.findPermissions(user.getUsername()));
 
         return authorizationInfo;
     }
@@ -45,7 +45,7 @@ public class MyRealm extends AuthorizingRealm {
 //        }
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user.getUsername(), //用户名
+                user, //用户名
                 user.getPassword(), //密码
                 getName()  //realm name
         );
